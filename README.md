@@ -1,6 +1,6 @@
 # MEF-LSO-Cantata-SDK
 
-This repository contains the MEF LSO Interlude SDK.
+This repository contains the MEF LSO Cantata SDK.
 
 ## Copyright
 
