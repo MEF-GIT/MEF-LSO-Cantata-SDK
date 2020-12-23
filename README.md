@@ -3,7 +3,7 @@
 ## Download Link
 
 Download the entire repository by clicking
-[here](https://github.com/MEF-GIT/MEF-LSO-Cantata-SDK-extended/releases/download/aretha/MEF-LSO-Cantata-SDK-extended-aretha.zip)
+[here](https://github.com/MEF-GIT/MEF-LSO-Cantata-SDK/releases/download/aretha/MEF-LSO-Cantata-SDK-aretha.zip)
 
 ## Overview
 
