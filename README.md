@@ -7,7 +7,7 @@ Download the entire repository by clicking
 
 ## Overview
 
-This repository contains the MEF LSO Cantata SDK. It includes API definitions for the following functional areas to support Subscriber Ethernet Products (EPL) leveraging the corresponding Sonata API specifications:
+This repository contains the MEF LSO Cantata SDK. It includes API definitions for the following functional areas to support Subscriber Ethernet Products (EPL) leveraging the corresponding LSO Sonata API specifications:
 
 - Product Order
 
