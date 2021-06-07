@@ -1,28 +1,100 @@
-# MEF-LSO-Cantata-SDK - Aretha Release
+# MEF-LSO-Cantata-SDK - Billie Release
 
 ## Download Link
 
 Download the entire repository by clicking
-[here](https://github.com/MEF-GIT/MEF-LSO-Cantata-SDK/releases/download/aretha/MEF-LSO-Cantata-SDK-aretha.zip)
+[here](https://github.com/MEF-GIT/MEF-LSO-Cantata-SDK/releases/download/billie/MEF-LSO-Cantata-SDK-billie.zip)
 
-## Overview
+## Introduction
 
-This repository contains the MEF LSO Cantata SDK. It includes API definitions for the following functional areas to support Subscriber Ethernet Products (EPL) leveraging the corresponding LSO Sonata API specifications:
+This repository contains the MEF LSO Cantata SDK. It includes API definitions
+for the following functional areas:
 
+- Serviceability
+  - Address
+  - Site Retrieval
+  - Product Offering Qualification Management
+- Product Quote
 - Product Order
+- Product Inventory
+- Trouble Ticket
 
-The Subscriber Ethernet Product Specification for EPL leverages and builds on top of the Product Specification for Access ELine as delivered by MEF W106. Static binding of Product Order envelope API with EPL Product Specification payload is also provided
+It also provides Product Schemas for:
+
+- EPL
+- EPLAN
+- EPTREE
+- EVPL
+- EVPLAN
+- EVPTREE
+
+## High-level release notes
+
+With this release Cantata is reusing all of Sonata APIs. The theme of this
+release is **Ordering and Inventory**: it delivers full coverage of Business
+Requirements, API and API Developer Guides for all above mentioned Cantata API
+functions.
+
+- All APIs have been reviewed and updated to follow their respective Business
+  Requirements & Use Cases and Developer Guides documents
+- All API definitions are provided in OAS 3.0 standard.
+- New documents:
+  - MEF W87 - LSO Cantata and LSO Sonata Product Offering Qualification API
+    Developer Guide
+  - MEF W115 - LSO Cantata and LSO Sonata Quote Management API Developer Guide
+  - MEF W121 - LSO Cantata and LSO Sonata Address Management API Developer Guide
+  - MEF W122 - LSO Cantata and LSO Sonata Site Management API Developer Guide
+  - MEF W116 - LSO Cantata and LSO Sonata Product Inventory API - Developer
+    Guide
+  - MEF W123 - LSO Cantata and LSO Sonata Product Order Management API -
+    Developer Guide
+  - MEF W124 - LSO Cantata and LSO Sonata Trouble Ticketing API - Developer Guide
+  - MEF W125 - LSO Cantata and LSO Sonata Product Specification - Subscriber
+    Ethernet - Schema Guide
 
 ## Maturity Level
 
-The API files contained in this SDK are evolving and subject to change. They are based on documents that are either ratified standards or draft standards that have not yet completed the review cycles and approvals necessary to achieve the status as a MEF standard. MEF is making these publicly available at this time to invite wider industry review.
+The API files contained in this SDK are evolving and subject to change. They are
+based on documents that are either ratified standards or draft standards that
+have not yet completed the review cycles and approvals necessary to achieve the
+status as a MEF standard. MEF is making these publicly available at this time to
+invite wider industry review.
 
 The maturity per functionality presents as follows:
 
+- Address Validation, Site Query:
+  - Business Requirements
+    - MEF 79 - **Published Standard**
+    - MEF 79.0.2 - **Draft Release 2, Letter Ballot pending**
+  - Developer Guide/API
+    - MEF W121 - LSO Cantata and LSO Sonata Address Management API - Developer Guide - **work in
+      progress - CfC#1 reviewed**
+    - MEF W122 - LSO Cantata and LSO Sonata Site Management API - Developer Guide - **work in
+      progress - CfC#1 reviewed**
+- Product Offering Qualification:
+  - Business Requirements
+    - MEF 79 - **Published Standard**
+    - MEF 79.0.1 - **Published Standard**
+  - Developer Guide/API - MEF W87 - **work in progress - Draft Standard (R1),
+    Ready for CfC#4**
+- Quote:
+  - Business Requirements - MEF W80 - **Draft Release 6, Letter Ballot pending**
+  - Developer Guide/API- MEF W115 - LSO Cantata and LSO Sonata Quote Management API - Developer
+    Guide - **work in progress, CfC#1 reviewed**
 - Order:
-  - Business Requirements - MEF 57.2 - **Draft Release 1**
-  - Developer Guide - **none**
-  - API - **work in progress**
+  - Business Requirements - MEF 57.2 - **Draft Release 2**
+  - Developer Guide/API - **work in progress - ready fo CfC#1**
+- Inventory:
+  - Business Requirements - MEF 81, MEF 81.0.1 **Published Standard**
+  - Developer Guide/API - **work in progress - ready fo CfC#1**
+- Product Specifications:
+  - Access E-Line - MEF W106 **work in progress, CfC#2 reviewed**
+  - EPL, EPLAN, EPTREE, EVPL, EVPLAN, EVPTREE - **work in progress**
+
+For details on the maturity map and the roadmap for future releases please refer
+to
+[LSO Cantata SDK Home Page](https://wiki.mef.net/display/CESG/LSO+Cantata+SDK)
+on the MEF WIKI.
 
 ## Contents
 
@@ -31,47 +103,55 @@ This SDK contains the following items:
 - `COPYRIGHT` - Copyright 2020 MEF Forum
 - `LICENSE` - Contains a copy of the Apache 2.0 license
 - `README` - This file
-- `api` - Definitions of the API are found in this directory
-  - `\cantata\order` - Contains the API definitions for inter-carrier service
-    ordering capability.
-- `doc` - All related standards and Developer Guides.
-  - `\cantata-sonata\carrierEthernet` - automatically generated documentation
-    for EPL
-  - standards - The rest of documents and standards.
-  - uml - A collection of UML diagrams generated from all of the API files.
-- staticBinding - Contains static bindings of envelope APIs with Product
-  Specification payloads. It comes in OpenAPI 3.0.
+- `productApi` - Definitions of the API are found in this directory
+  - `inventory` - Contains the API definitions necessary for inter-carrier
+    retrieval of Product Inventory
+  - `order` - Contains the API definitions for inter-carrier service ordering
+    capability.
+  - `quote` - Contains the API definitions for inter-carrier service quotation
+    capability
+  - `serviceability` - Contains the APIs that allow the Service Provider or
+    Buyer to perform:
+    - `address` - Retrieve Address information including exact formats for
+      Addresses known to the Seller
+    - `offeringQualification` - Determine whether it is feasible for the Seller
+      to deliver a particular Product with a given configuration to a particular
+      geographic location if applicable.
+    - `site` - Retrieve Service Site information including exact formats for
+      Service Sites known to the Seller
+  - `troubleTicket` - Create and manage Trouble Tickets
+- `documentation` - All related standards and Developer Guides.
+  - `productApi` - API related documentation - Developer Guides
+    - `inventory` - MEF W116 Developer Guide
+    - `order` - MEF W123 Developer Guide
+    - `quote` - MEF W115 Developer Guide
+    - `serviceability/address` - MEF W121 Developer Guide
+    - `serviceability/offeringQualification` - MEF W87 Developer Guide
+    - `serviceability/site` - MEF W122 Developer Guide
+    - `troubleTicket` - MEF W124 Developer Guide
+  - `productSchema` - product related documentation
+    - `carrierEthernet` - MEF W106 and MEF W125 Product Schema Guides
+  - `supportingStandards` - The rest of documents and standards.
+- `ProductSchema` - Product Specification schemas for:
+  - `carrierEthernet` - Carrier Ethernet product Schemas
+- `generated/staticBinding/full` - contains automatically generated (with help
+  of the open source
+  [Sonata Blending Tool](https://github.com/Amartus/SonataBlendingTool)), not
+  normative static bindings of envelope APIs with Product Specification
+  payloads.
 
-NOTE: Please note the Readme files in particular directories that provide more
-detailed information about corresponding functionalities. All superseded files
-can be found in the Git history if needed.
-
-## Precedents
-
-Any developer intending to use the materials in this repository should first
-thoroughly read, review, and understand the following materials:
-
-- [MEF 55: Lifecycle Service Orchestration (LSO): Reference Architecture and Framework](doc/standards/MEF%2055%20-%20LSO%20Reference%20Architecture%20and%20Framework.pdf)
-  This document is a ratified MEF standard.
-- [MEF 55.0.1: Amendment to MEF 55: Operational Threads](doc/standards/MEF%2055.0.1%20-%20Operational%20Threads.pdf)
-  This document is a ratified MEF standard.
-- [MEF 55.0.2: Amendment to MEF 55: TOSCA Services Templates](doc/standards/MEF%2055.0.2%20-%20TOSCA%20Service%20Templates.pdf)
-  This document is a ratified MEF standard.
-- [MEF 50.1: MEF Services Lifecycle Process Flows](doc/standards/MEF%2050.1%20-%20MEF%20Services%20Lifecycle%20Process%20Flows.pdf)
-  This document is a ratified MEF standard.
-- [MEF 57.2: Draft Release 1 Product Order Management Requirements and Use Cases](https://www.mef.net/wp-content/uploads/2020/11/MEF-57.2-Draft-R1.pdf)
-  Draft Release 1
-
-## Issues, questions, and Feedback
+## Issues, Questions, and Feedback
 
 Issues should be reported with the use of GitHub issues. Questions and feedback
 should be asked either at
-[Sonata SDK Community](https://github.com/orgs/MEF-GIT/teams/mef-lso-sonata-sdk-community)
+[Cantata SDK Community](https://github.com/orgs/MEF-GIT/teams/mef-lso-cantata-sdk-community)
 or directly to community_manager@mef.net.
 
-**NOTE:** All artifacts included in this repository have line numbers. When referring to specific content in any of these artifacts, please quote the line numbers to which you are referring.
+**NOTE:** All artifacts included in this repository have line numbers. When
+referring to specific content in any of these artifacts, please quote the line
+numbers to which you are referring.
 
-The MEF LSO Sonata SDK is released under the Apache 2.0 license.
+The MEF LSO Cantata SDK is released under the Apache 2.0 license.
 
 ## Copyright
 
@@ -79,16 +159,38 @@ The MEF LSO Sonata SDK is released under the Apache 2.0 license.
 
 ## Disclaimer
 
-The information in this publication is freely available for reproduction and use by any recipient and is believed to be accurate as of its publication date. Such information is subject to change without notice and MEF Forum (MEF) is not responsible for any errors. MEF does not assume responsibility to update or correct any information in this publication. No representation or warranty, expressed or implied, is made by MEF concerning the completeness, accuracy, or applicability of any information contained herein and no liability of any kind shall be assumed by MEF as a result of reliance upon such information.
+The information in this publication is freely available for reproduction and use
+by any recipient and is believed to be accurate as of its publication date. Such
+information is subject to change without notice and MEF Forum (MEF) is not
+responsible for any errors. MEF does not assume responsibility to update or
+correct any information in this publication. No representation or warranty,
+expressed or implied, is made by MEF concerning the completeness, accuracy, or
+applicability of any information contained herein and no liability of any kind
+shall be assumed by MEF as a result of reliance upon such information.
 
-The information contained herein is intended to be used without modification by the recipient or user of this document. MEF is not responsible or liable for any modifications to this document made by any other party.
+The information contained herein is intended to be used without modification by
+the recipient or user of this document. MEF is not responsible or liable for any
+modifications to this document made by any other party.
 
-The receipt or any use of this document or its contents does not in any way create, by implication or otherwise:
+The receipt or any use of this document or its contents does not in any way
+create, by implication or otherwise:
 
-(a) any express or implied license or right to or under any patent, copyright, trademark or trade secret rights held or claimed by any MEF member which are or may be associated with the ideas, techniques, concepts or expressions contained herein; nor
+(a) any express or implied license or right to or under any patent, copyright,
+trademark or trade secret rights held or claimed by any MEF member which are or
+may be associated with the ideas, techniques, concepts or expressions contained
+herein; nor
 
-(b) any warranty or representation that any MEF member will announce any product(s) and/or service(s) related thereto, or if such announcements are made, that such announced product(s) and/or service(s) embody any or all of the ideas, technologies, or concepts contained herein; nor
+(b) any warranty or representation that any MEF member will announce any
+product(s) and/or service(s) related thereto, or if such announcements are made,
+that such announced product(s) and/or service(s) embody any or all of the ideas,
+technologies, or concepts contained herein; nor
 
-(c) any form of relationship between any MEF member and the recipient or user of this document.
+(c) any form of relationship between any MEF member and the recipient or user of
+this document.
 
-Implementation or use of specific MEF standards, specifications, or recommendations will be voluntary, and no Member shall be obliged to implement them by virtue of participation in MEF Forum. MEF is a non-profit international organization to enable the development and worldwide adoption of agile, assured, and orchestrated network services. MEF does not, expressly or otherwise, endorse or promote any specific products or services.
+Implementation or use of specific MEF standards, specifications, or
+recommendations will be voluntary, and no Member shall be obliged to implement
+them by virtue of participation in MEF Forum. MEF is a non-profit international
+organization to enable the development and worldwide adoption of agile, assured,
+and orchestrated network services. MEF does not, expressly or otherwise, endorse
+or promote any specific products or services.

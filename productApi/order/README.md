@@ -1,0 +1,123 @@
+# Product Order Management: Release notes
+
+## Release Billie:
+
+### List of changes in the API:
+
+- endpoints added:
+  - `/productOrder/{id}:`
+    - `patch`
+  - `/charge:`
+    - `get`
+  - `/charge/{id}:`
+    - `get`
+    - `patch`
+  - `/modifyProductOrderItemCompletionDate:`
+    - `get`
+    - `post`
+  - `/modifyProductOrderItemCompletionDate/{id}`
+    - `get`
+- `MEFProductOrderSummary` renamed to `MEFProductOrder_Find`
+- `ProductOrder`:
+  - added:
+    - `charge`
+    - `requestedCompletionDate` 
+  - removed:
+    - `pricingReference`
+  - `state`:
+    - `pending` - renamed to `pending.assessingModification`
+    - `held` - renamed to `held.assessingCharge`
+- `ProductOrderItem`
+  - added:
+    - `expediteAcceptedIndicator`
+    - `charge`
+    - `terminationError`
+  - removed:
+    - `itemPrice`
+  - `itemTerm` - maxItems: 1
+- `MEFProductOrderItem_Common`:
+  - added:
+    - `relatedBuyerPON`
+    - `expediteIndicator`
+  - removed:
+    - `pricingReference`
+    - `pricingTerm`
+    - `pricingMethod`
+    - `itemPrice`
+  - `coordinatedAction` - changed to array
+  - `requestedItemTerm` - changed from list to single reference
+- `MEFItemTerm`
+  - `name` - added
+  - `description` - added
+- `MEFProductRefOrValueForOrder`
+  - renamed to `MEFProductRefOrValueOrder`
+  - `buyerProductId` - removed
+  - `productOffering` - not mandatory
+- `MEFOrderItemCoordinatedAction`
+  - `id` - renamed to `itemId`
+- `MEFProductConfiguration`
+  - `@schemaLocation` - removed
+- `ProductRelationship`
+  - `groupingKey` - removed
+- `ProductOrderEventPayload`
+  - `milestoneName` - added
+- `Error` - removed `status`
+- `CancelProductOrder`
+  - added:
+    - `cancellationReasonType`
+    - `orderVersion`
+    - `note`
+    - `relatedContactInformation`
+  - removed:
+    - `requestedCancellationDate`
+    - `effectiveCancellationDate`
+    - `cancellationDeniedReason`
+- `CancelProductOrder_Create`
+  - added:
+    - `cancellationReasonType`
+    - `orderVersion`
+    - `note`
+    - `relatedContactInformation`
+  - removed:
+    - `requestedCancellationDate`
+- `MEFBillingAccountRefOrValue` replaced with `MEFBillingAccount`
+- `NoteSourceType` - renamed to `MEFBuyerSellerType`
+- Notifications:
+  - removed:
+    - `productOrderCreateEvent`
+    - `cancelProductOrderCreateEvent`
+  - added:
+    - `productOrderItemStateChangeEvent`
+    - `productSpecificProductOrderMilestoneEvent`
+    - `productSpecificProductOrderItemMilestoneEvent`
+    - `chargeCreateEvent`
+    - `chargeStateChangeEvent`
+    - `chargeTimeoutEvent`
+    - `modifyProductOrderItemCompletionDateStateChangeEvent`
+  - renamed:
+    - `productOrderExpectedCompletionDateSet` => `productOrderExpectedCompletionDateSetEvent`
+    - `productOrderItemExpectedCompletionDateSet` => `productOrderItemExpectedCompletionDateSetEvent`
+- Addded types
+  - `ProductOrder_Update`
+  - `MEFProductOrderItem_Update`
+  - `MEFCharge`
+  - `MEFChargeItem`
+  - `MEFChargeActivityType`
+  - `MEFPriceType`
+  - `MEFChargeStateType`
+  - `MEFAcceptedRejectedType`
+  - `MEFModifyProductOrderItemCompletionDate`
+  - `MEFModifyProductOrderItemCompletionDateStateType`
+  - `MEFProductOrderItemRef`
+  - `TerminationError`
+  - `CancelProductOrderStateType`
+  - `CancellationReasonType`
+- Removed types:
+  - `MEFPricingMethod`
+  - `Error405`
+  - `OrderPrice`
+  - `TaskStateType`
+  - `MEFPricingMethod`
+  - `OrderPrice`
+
+**Readiness status**: Work in progress and is subject to change
