@@ -48,7 +48,8 @@ functions.
     Guide
   - MEF W123 - LSO Cantata and LSO Sonata Product Order Management API -
     Developer Guide
-  - MEF W124 - LSO Cantata and LSO Sonata Trouble Ticketing API - Developer Guide
+  - MEF W124 - LSO Cantata and LSO Sonata Trouble Ticketing API - Developer
+    Guide
   - MEF W125 - LSO Cantata and LSO Sonata Product Specification - Subscriber
     Ethernet - Schema Guide
 
@@ -67,10 +68,10 @@ The maturity per functionality presents as follows:
     - MEF 79 - **Published Standard**
     - MEF 79.0.2 - **Draft Release 2, Letter Ballot pending**
   - Developer Guide/API
-    - MEF W121 - LSO Cantata and LSO Sonata Address Management API - Developer Guide - **work in
-      progress - CfC#1 reviewed**
-    - MEF W122 - LSO Cantata and LSO Sonata Site Management API - Developer Guide - **work in
-      progress - CfC#1 reviewed**
+    - MEF W121 - LSO Cantata and LSO Sonata Address Management API - Developer
+      Guide - **work in progress - CfC#1 reviewed**
+    - MEF W122 - LSO Cantata and LSO Sonata Site Management API - Developer
+      Guide - **work in progress - CfC#1 reviewed**
 - Product Offering Qualification:
   - Business Requirements
     - MEF 79 - **Published Standard**
@@ -79,8 +80,8 @@ The maturity per functionality presents as follows:
     Ready for CfC#4**
 - Quote:
   - Business Requirements - MEF W80 - **Draft Release 6, Letter Ballot pending**
-  - Developer Guide/API- MEF W115 - LSO Cantata and LSO Sonata Quote Management API - Developer
-    Guide - **work in progress, CfC#1 reviewed**
+  - Developer Guide/API- MEF W115 - LSO Cantata and LSO Sonata Quote Management
+    API - Developer Guide - **work in progress, CfC#1 reviewed**
 - Order:
   - Business Requirements - MEF 57.2 - **Draft Release 2**
   - Developer Guide/API - **work in progress - ready fo CfC#1**
@@ -137,8 +138,7 @@ This SDK contains the following items:
 - `generated/staticBinding/full` - contains automatically generated (with help
   of the open source
   [Sonata Blending Tool](https://github.com/Amartus/SonataBlendingTool)), not
-  normative static bindings of envelope APIs with Product Specification
-  payloads.
+  normative static bindings of envelope APIs with all Product Specifications.
 
 ## Issues, Questions, and Feedback
 
