@@ -3,7 +3,7 @@
 ## Download Link
 
 Download the entire repository by clicking
-[here](https://github.com/MEF-GIT/MEF-LSO-Cantata-SDK/releases/download/billie/MEF-LSO-Cantata-SDK-billie.zip)
+[here](https://github.com/MEF-GIT/MEF-LSO-Cantata-SDK/releases/download/billie-final/MEF-LSO-Cantata-SDK-billie.zip)
 
 ## Introduction
 
