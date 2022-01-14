@@ -28,11 +28,7 @@ It also provides Product Schemas for:
 
 ## High-level release notes
 
-<<<<<<< HEAD
-With this release Cantata is reusing all of Sonata APIs. The theme of this release is **Ordering and Inventory**: it delivers full coverage of Business Requirements, API and API Developer Guides for all above mentioned Cantata API functions.
-=======
 With this release Cantata is reusing all of Sonata APIs. The theme of this release is **Ordering and Inventory**: it delivers full coverage of Business Requirements, API and API Developer Guides for all above mentioned Cantata API functions. **NOTE:** Some parts of the release are for MEF Members only.
->>>>>>> refs/heads/billie-final
 
 - All APIs have been reviewed and updated to follow their respective Business Requirements & Use Cases and Developer Guides documents
 - All API definitions are provided in OAS 3.0 standard.

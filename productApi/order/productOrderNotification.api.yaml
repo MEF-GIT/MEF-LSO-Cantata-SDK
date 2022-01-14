@@ -9,7 +9,14 @@ info:
     This is the API to manage notification for Product Order. This API must be
     deployed on notification subscriber side (buyer side / listener).
 
-    Product Order Notification API uses TMF 622 v4.0.0 as template."
+
+    Copyright 2021 MEF Forum and its contributors.
+
+
+    This file includes content based on the TM Forum Product Order API (TMF622
+    v4.0.0) available at https://github.com/tmforum-apis/TMF622_ProductOrder,
+    which is licensed by the TM Forum under the Apache License version 2.0. Such
+    content has been modified by the MEF Forum and its contributors.
   title: Product Order Notification
   version: 2.0.0-RC
   x-logo:
