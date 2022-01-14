@@ -1,27 +1,18 @@
 openapi: 3.0.1
 info:
-  description: >
-    **This file forms part of MEF W116**
+  description: |
+    **This file forms part of MEF 116**
 
+    This API implements Business Requirements described in MEF 81
 
-    **This specification represents MEF work in progress and is subject to
-    change.** 
+    It allows the Buyer to retrieve the information about existing Product
+    instances from Seller's Product Inventory.
 
-
-    The scope of this MEF API is to provide the ability for a Service
-    Provider's (Buyer)
-
-    operational support system to retrieve from a Partner's (Seller) Inventory
-    management
-
-    system a set of product instances based upon a filter of product inventory
-    attributes,
-
-    or a specific product instance based upon a product identifier.
-
+    List of supported use cases:
+    - Retrieve Product List
+    - Retrieve Product by Identifier
 
     Copyright 2021 MEF Forum and its contributors.
-
 
     This file includes content based on the TM Forum Product Inventory
     Management API (TMF637 v4.0.0) available at
@@ -29,9 +20,13 @@ info:
     by the TM Forum under the Apache License version 2.0. Such content has been
     modified by the MEF Forum and its contributors.
   title: Product Inventory Management
-  version: 1.0.0-RC
+  version: 1.0.1
 servers:
-  - url: 'https://serverRoot/mefApi/cantata/productInventory/v1/'
+  - url: 'https://{serverBase}/mefApi/cantata/productInventory/v1/'
+    variables:
+      serverBase:
+        default: mef.net
+        description: The base of Seller's URL.
 tags:
   - name: product
   - name: events subscription

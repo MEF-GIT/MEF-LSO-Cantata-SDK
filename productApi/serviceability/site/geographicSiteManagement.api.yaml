@@ -1,35 +1,32 @@
 openapi: 3.0.1
 info:
-  description: >-
+  description: |
     **This file forms part of MEF 122**
 
+    This API implements Business Requirements described in MEF 79
 
-    **This specification represents MEF work in progress and is subject to
-    change.** 
-
-
-    This API allows to retrieve a list of Geographic site and to get all
+    It allows to retrieve a list of Geographic Sites and to get all
     information for one geographic site.
 
-
-    A geographic site is a fixed physical location at which a Product can be
-    installed. Its location can be
-
-    described either with geocoding (Lat/Long information) or by association
-    with an Address or Address Reference.
-
+    List of supported Use Cases:
+    
+    - Retrieve Service Site by Identifier
+    - Retrieve Service Site List
 
     Copyright 2021 MEF Forum and its contributors
-
 
     This file includes content based on the TM Forum Geographic Site API (TMF674
     v4.0.0) available at https://github.com/tmforum-apis/TMF674_GeographicSite,
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the MEF Forum and its contributors.
-  title: API Geographic Site Management
-  version: 1.0.0-RC
+  title: Geographic Site Management
+  version: 1.0.1
 servers:
-  - url: 'https://serverRoot/mefApi/cantata/geographicSiteManagement/v1/'
+  - url: 'https://{serverBase}/mefApi/cantata/geographicSiteManagement/v1/'
+    variables:
+      serverBase:
+        default: mef.net
+        description: The base of Seller's URL.
 tags:
   - name: geographicSite
   - name: events subscription

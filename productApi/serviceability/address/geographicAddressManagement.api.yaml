@@ -1,44 +1,33 @@
 openapi: 3.0.1
 info:
-  description: >-
+  description: |
     **This file forms part of MEF 121**
 
+    This API implements Business Requirements described in MEF 79
 
-    **This specification represents MEF work in progress and is subject to
-    change.** 
+    It allows the Buyer to retrieve address information from the Seller, including
+    exact formats, for addresses known to the Seller.
 
-
-    This API allows to:
-
-
-    *Retrieve a geographic address by identifier from Seller's database.
-
-    *Validate geographic address data. The Buyer will trigger an address
-    validation request to get a valid address description and id from the
-    Seller
-
-
-    **In MEF context following restrictions apply:**
-
-    Only POST operation for resource geographicAddressValidation is used.
-
-    Event Subscription is not managed.
-
-    Operation GET for geographicAddress can be only done with an id.
-
+    List of supported use cases:
+    
+    - Validate Address
+    - Retrieve Address by Identifier
 
     Copyright 2021 MEF Forum and its contributors
-
 
     This file includes content based on the TM Forum Geographic Address API
     (TMF673 v4.0.1) available at
     https://github.com/tmforum-apis/TMF673_GeographicAddress, which is licensed
     by the TM Forum under the Apache License version 2.0. Such content has been
     modified by the MEF Forum and its contributors.
-  title: API Geographic Address Management
-  version: 1.0.0-RC
+  title: Geographic Address Management
+  version: 1.0.1
 servers:
-  - url: 'https://serverRoot/mefApi/cantata/geographicAddressManagement/v1/'
+  - url: 'https://{serverBase}/mefApi/cantata/geographicAddressManagement/v1/'
+    variables:
+      serverBase:
+        default: mef.net
+        description: The base of Seller's URL.
 tags:
   - name: geographicAddressValidation
   - name: geographicAddress
@@ -550,8 +539,8 @@ components:
           $ref: '#/components/schemas/FieldedAddress'
           readOnly: true
           description:
-            A Fielded Address that is associated with the Geographic Point or the
-            Geographic Address Label.
+            A Fielded Address that is associated with the Geographic Point or
+            the Geographic Address Label.
       required:
         - '@type'
       type: object
@@ -587,7 +576,8 @@ components:
       properties:
         validationResult:
           $ref: '#/components/schemas/MEFValidationResultType'
-          description: Result of the address validation (success, partial, fail)
+          description:
+            Result of the address validation (success, partial, fail)
         alternateGeographicAddress:
           items:
             $ref: '#/components/schemas/GeographicAddress'
@@ -614,8 +604,8 @@ components:
         bestMatchGeographicAddress:
           $ref: '#/components/schemas/GeographicAddress'
           description:
-            Represents that the Seller is confident this is likely a direct match
-            to the submittedGeographicAddress
+            Represents that the Seller is confident this is likely a direct
+            match to the submittedGeographicAddress
       required:
         - provideAlternative
         - submittedGeographicAddress
