@@ -23,15 +23,7 @@ info:
 
     (note: POQ Notification are described in a separate swagger)
 
-
-    Copyright 2021 MEF Forum and its contributors
-
-
-    This file includes content based on the TM Forum Product Offering
-    Qualification API (TMF679 v4.0.0) available at
-    https://github.com/tmforum-apis/TMF679_ProductOfferingQualification, which
-    is licensed by the TM Forum under the Apache License version 2.0. Such
-    content has been modified by the MEF Forum and its contributors.
+    The ProductOfferingQualification API used TMF 679 (v4.0) as a template.
   title: Product Offering Qualification Management
   version: 1.0.0-RC
 servers:

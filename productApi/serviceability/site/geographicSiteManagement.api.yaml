@@ -19,13 +19,7 @@ info:
     with an Address or Address Reference.
 
 
-    Copyright 2021 MEF Forum and its contributors
-
-
-    This file includes content based on the TM Forum Geographic Site API (TMF674
-    v4.0.0) available at https://github.com/tmforum-apis/TMF674_GeographicSite,
-    which is licensed by the TM Forum under the Apache License version 2.0. Such
-    content has been modified by the MEF Forum and its contributors.
+    Geographic Site API uses TMF 674 v.4.0.0 as template
   title: API Geographic Site Management
   version: 1.0.0-RC
 servers:

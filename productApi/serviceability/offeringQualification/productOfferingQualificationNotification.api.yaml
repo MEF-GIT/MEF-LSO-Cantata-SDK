@@ -12,15 +12,6 @@ info:
     first must to register as a notification listener using POQ Management
     `/hub` endpoint.
 
-
-    Copyright 2021 MEF Forum and its contributors
-
-
-    This file includes content based on the TM Forum Product Offering
-    Qualification API (TMF679 v4.0.0) available at
-    https://github.com/tmforum-apis/TMF679_ProductOfferingQualification, which
-    is licensed by the TM Forum under the Apache License version 2.0. Such
-    content has been modified by the MEF Forum and its contributors.
   title: Product Offering Qualification Notification
   version: 1.0.0-RC
   x-logo:
