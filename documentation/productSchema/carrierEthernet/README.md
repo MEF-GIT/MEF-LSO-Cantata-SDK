@@ -1,6 +1,6 @@
-# MEF-LSO-Cantata-SDK - Celine Release - Product Schemas
+# MEF-LSO-Sonata-SDK - Billie Release - Product and Service Schemas
 
-The MEF LSO Cantata SDK Product Schemas are available to MEF Members and can be found at https://github.com/MEF-GIT/MEF-LSO-Cantata-SDK-extended/tree/celine/documentation/productSchema
+The MEF LSO Sonata SDK Product and Service Schemas are available to MEF Members and can be found at https://github.com/MEF-GIT/MEF-LSO-Cantata-SDK-extended
 
 ## Copyright
 
