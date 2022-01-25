@@ -117,7 +117,10 @@ This SDK contains the following items:
   - `supportingStandards` - The rest of documents and standards.
 - `ProductSchema` - Product Specification schemas for:
   - `carrierEthernet` - Carrier Ethernet product Schemas
-- `generated/staticBinding/full` - contains automatically generated (with help of the open source [Sonata Blending Tool](https://github.com/Amartus/SonataBlendingTool)), not normative static bindings of envelope APIs with all Product Specifications. The Address, Site and Trouble Ticket APIs are not included as they do not carry product information.
+- `generated/staticBinding` - contains automatically generated (with help of the open source [Sonata Blending Tool](https://github.com/Amartus/SonataBlendingTool)), not normative static bindings of envelope APIs with Product Specifications. The Address, Site and Trouble Ticket APIs are not included as they do not carry product information.
+  - `full` - contains static binding of all available product schemas
+  - `carrierEthernet` - contains static binding of only CarrierEthernet products
+  - `ip` - contains static binding of only IP products
 
 ## Issues, Questions, and Feedback
 
