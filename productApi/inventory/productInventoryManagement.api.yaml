@@ -20,7 +20,7 @@ info:
     by the TM Forum under the Apache License version 2.0. Such content has been
     modified by the MEF Forum and its contributors.
   title: Product Inventory Management
-  version: 1.0.1
+  version: 1.0.2
 servers:
   - url: 'https://{serverBase}/mefApi/cantata/productInventory/v1/'
     variables:
@@ -224,8 +224,7 @@ paths:
   '/product/{id}':
     get:
       description: >-
-        This operation retrieves a Product entity. Attribute selection is
-        enabled for all first level attributes.
+        This operation retrieves a Product entity.
       operationId: retrieveProduct
       parameters:
         - description: Identifier of the Product
@@ -986,6 +985,8 @@ components:
             All taxes excluded amount (expressed in the given currency)
           $ref: '#/components/schemas/Money'
       type: object
+      required:
+        - dutyFreeAmount
     ProductOfferingRef:
       description: >-
         A reference to a Product Offering offered by the Seller to the Buyer. A

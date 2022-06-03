@@ -34,9 +34,9 @@ info:
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the MEF Forum and its contributors.
   title: Product Ordering Management
-  version: 3.0.0-RC
+  version: 8.0.0-RC
 servers:
-  - url: 'https://{serverBase}/mefApi/cantata/productOrderingManagement/v3/'
+  - url: 'https://{serverBase}/mefApi/sonata/productOrderingManagement/v8/'
     variables:
       serverBase:
         default: mef.net
@@ -2021,7 +2021,7 @@ components:
             notification is sent. E.g. for "callback":
             "https://buyer.co/listenerEndpoint", the product order state change
             event notification will be sent to:
-            `https://buyer.co/listenerEndpoint/mefApi/cantata/productOrderNotification/v3/listener/productOrderStateChangeEvent`
+            `https://buyer.co/listenerEndpoint/mefApi/sonata/productOrderNotification/v8/listener/productOrderStateChangeEvent`
           type: string
         query:
           description: >-
