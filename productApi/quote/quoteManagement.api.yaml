@@ -1671,9 +1671,9 @@ components:
           description:
             All taxes excluded amount (expressed in the given currency)
           $ref: '#/components/schemas/Money'
-      type: object
       required:
         - dutyFreeAmount
+      type: object
     ProductOfferingQualificationItemRef:
       description: >-
         It's a productOfferingQualification item that has been executed

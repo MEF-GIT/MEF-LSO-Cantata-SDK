@@ -1,42 +1,75 @@
 openapi: 3.0.1
 info:
-  description: |
+  description: >
     **This file forms part of MEF W123** 
 
+
     **This specification represents MEF work in progress and is subject to
+
     change.** 
+
 
     This API implements Business Requirements described in MEF W57.2
 
-    The scope of this API includes the following capabilities to the API:
+
+    Product Order Management allows the Buyer to request the Seller to initiate
+    and complete the
+
+    fulfillment process of an installation of a Product Offering, an update to
+
+    an existing Product, or a disconnect of an existing Product at the address
+
+    defined by the Buyer.
+
+
+    List of supported Use Cases:
+
 
     - Create Product Order
-    - Update Product Order by Product Order Identifier
-    - Retrieve List of Product Orders
-    - Retrieve Product Order by Product Order Identifier
-    - Modify Product Order Item Requested Delivery Date
-    - Retrieve Modify Product Order Item Requested Delivery Date List
-    - Retrieve Modify Product Order Item Requested Delivery Date by Identifier
-    - Cancel Product Order
-    - Retrieve List of Cancel Product Orders
-    - Retrieve Cancel Product Order Request by Cancel Product Order Identifier
-    - Initiate Charge
-    - Respond to Charge
-    - Retrieve List of Charges
-    - Retrieve Charge by Charge Identifier
-    - Register for Notifications
-    - Send Notifications
 
-    Copyright 2021 MEF Forum and its contributors.
+    - Update Product Order by Product Order Identifier
+
+    - Retrieve List of Product Orders
+
+    - Retrieve Product Order by Product Order Identifier
+
+    - Modify Product Order Item Requested Delivery Date
+
+    - Retrieve Modify Product Order Item Requested Delivery Date List
+
+    - Retrieve Modify Product Order Item Requested Delivery Date by Identifier
+
+    - Cancel Product Order
+
+    - Retrieve List of Cancel Product Orders
+
+    - Retrieve Cancel Product Order Request by Cancel Product Order Identifier
+
+    - Initiate Charge
+
+    - Respond to Charge
+
+    - Retrieve List of Charges
+
+    - Retrieve Charge by Charge Identifier
+
+    - Register for Notifications
+
+
+    Copyright 2022 MEF Forum and its contributors.
+
 
     This file includes content based on the TM Forum Product Order API (TMF622
+
     v4.0.0) available at https://github.com/tmforum-apis/TMF622_ProductOrder,
+
     which is licensed by the TM Forum under the Apache License version 2.0. Such
+
     content has been modified by the MEF Forum and its contributors.
   title: Product Ordering Management
-  version: 3.0.0-RC
+  version: 4.0.0-RC
 servers:
-  - url: 'https://{serverBase}/mefApi/cantata/productOrderingManagement/v3/'
+  - url: 'https://{serverBase}/mefApi/cantata/productOrderingManagement/v4/'
     variables:
       serverBase:
         default: mef.net
@@ -50,7 +83,7 @@ tags:
 paths:
   /productOrder:
     get:
-      description: This operation list or find ProductOrder entities
+      description: This operation lists or finds ProductOrder entities
       operationId: listProductOrder
       parameters:
         - description: State of the Product Order
@@ -134,7 +167,7 @@ paths:
             greater than
           explode: true
           in: query
-          name: requestedCompletionDate.gt
+          name: itemRequestedCompletionDate.gt
           required: false
           schema:
             format: date-time
@@ -145,25 +178,29 @@ paths:
             lesser than
           explode: true
           in: query
-          name: requestedCompletionDate.lt
+          name: itemRequestedCompletionDate.lt
           required: false
           schema:
             format: date-time
             type: string
           style: form
-        - description: Seller planned completion date greater than
+        - description: >-
+            Seller planned completion date of the Product Order Item, greater
+            than
           explode: true
           in: query
-          name: expectedCompletionDate.gt
+          name: itemExpectedCompletionDate.gt
           required: false
           schema:
             format: date-time
             type: string
           style: form
-        - description: Seller planned completion date lesser than
+        - description: >-
+            Seller planned completion date of the Product Order Item, lesser
+            than
           explode: true
           in: query
-          name: expectedCompletionDate.lt
+          name: itemExpectedCompletionDate.lt
           required: false
           schema:
             format: date-time
@@ -172,7 +209,7 @@ paths:
         - description: order cancellation date greater than
           explode: true
           in: query
-          name: orderCancellationDate.gt
+          name: cancellationDate.gt
           required: false
           schema:
             format: date-time
@@ -181,7 +218,7 @@ paths:
         - description: order cancellation date lesser than
           explode: true
           in: query
-          name: orderCancellationDate.lt
+          name: cancellationDate.lt
           required: false
           schema:
             format: date-time
@@ -293,7 +330,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: List or find ProductOrder objects
+      summary: Lists or finds ProductOrder objects
       tags:
         - productOrder
     post:
@@ -378,9 +415,7 @@ paths:
       x-codegen-request-body-name: productOrder
   '/productOrder/{id}':
     get:
-      description: >-
-        This operation retrieves a ProductOrder entity. Attribute selection is
-        enabled for all first level attributes.
+      description: This operation retrieves a ProductOrder entity.
       operationId: retrieveProductOrder
       parameters:
         - description: Identifier of the ProductOrder
@@ -557,7 +592,7 @@ paths:
       x-codegen-request-body-name: productOrder
   /cancelProductOrder:
     get:
-      description: This operation list or find CancelProductOrder entities
+      description: This operation lists or finds CancelProductOrder entities
       operationId: listCancelProductOrder
       parameters:
         - explode: true
@@ -569,9 +604,28 @@ paths:
           style: form
         - explode: true
           in: query
-          name: productOrderExternalId
+          name: state
           required: false
           schema:
+            enum:
+              - acknowledged
+              - done
+              - done.declined
+              - inProgress.assessingCharge
+              - rejected
+            type: string
+          style: form
+        - description: >-
+            Identifies the type of reason, Technical or Commercial, for the
+            Cancellation request
+          explode: true
+          in: query
+          name: cancellationReasonType
+          required: false
+          schema:
+            enum:
+              - technical
+              - commercial
             type: string
           style: form
         - description: >-
@@ -628,7 +682,7 @@ paths:
             application/json;charset=utf-8:
               schema:
                 items:
-                  $ref: '#/components/schemas/CancelProductOrder'
+                  $ref: '#/components/schemas/CancelProductOrder_Find'
                 type: array
           description: Success
           headers:
@@ -686,7 +740,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error501'
           description: Method not implemented.
-      summary: List or find CancelProductOrder objects
+      summary: Lists or finds CancelProductOrder objects
       tags:
         - cancelProductOrder
     post:
@@ -862,7 +916,7 @@ paths:
         - cancelProductOrder
   /charge:
     get:
-      description: This operation list or find Charge entities
+      description: This operation lists or finds Charge entities
       operationId: listCharge
       parameters:
         - description: id of the Product Order this Charge relates to.
@@ -879,6 +933,24 @@ paths:
           name: productOrderItemId
           required: false
           schema:
+            type: string
+          style: form
+        - description: Date that the Charge was created by the Seller (greater than)
+          explode: true
+          in: query
+          name: creationDate.gt
+          required: false
+          schema:
+            format: date-time
+            type: string
+          style: form
+        - description: Date that the Charge was created by the Seller. (greater than)
+          explode: true
+          in: query
+          name: creationDate.lt
+          required: false
+          schema:
+            format: date-time
             type: string
           style: form
         - description: >-
@@ -959,7 +1031,7 @@ paths:
             application/json;charset=utf-8:
               schema:
                 items:
-                  $ref: '#/components/schemas/MEFProductOrderCharge'
+                  $ref: '#/components/schemas/MEFProductOrderCharge_Find'
                 type: array
           description: Success
           headers:
@@ -1017,7 +1089,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error501'
           description: Method not implemented.
-      summary: List or find Charge objects
+      summary: Lists or finds Charge objects
       tags:
         - charge
   '/charge/{id}':
@@ -1370,9 +1442,7 @@ paths:
       tags:
         - events subscription
     get:
-      description: >-
-        This operation retrieves a hub entity. Attribute selection is enabled
-        for all first level attributes.
+      description: This operation retrieves a hub entity.
       operationId: retrieveHub
       parameters:
         - description: Identifier of the Hub
@@ -1458,8 +1528,8 @@ paths:
   /modifyProductOrderItemRequestedDeliveryDate:
     get:
       description: >-
-        This operation list or find ModifyProductOrderItemRequestedDeliveryDate
-        entities
+        This operation lists or finds
+        ModifyProductOrderItemRequestedDeliveryDate entities
       operationId: listModifyProductOrderItemRequestedDeliveryDate
       parameters:
         - explode: true
@@ -1647,7 +1717,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error501'
           description: Method not implemented.
-      summary: List or find ModifyProductOrderItemRequestedDeliveryDate objects
+      summary: Lists or finds ModifyProductOrderItemRequestedDeliveryDate objects
       tags:
         - modifyProductOrderItemRequestedDeliveryDate
     post:
@@ -1861,14 +1931,8 @@ components:
         bwpFlow:
           description: >-
             The Bandwidth Profile to be applied to all items that are in the
-            specified Class of Service or Egress Equivalence Class. If this is
-            an empty list, it means that the Bandwidth Profile is Disabled.
-          items:
-            $ref: '#/components/schemas/BwpFlow'
-          maxItems: 1
-          minItems: 0
-          type: array
-          uniqueItems: true
+            specified Class of Service or Egress Equivalence Class.
+          $ref: '#/components/schemas/BwpFlow'
         classOfServiceName:
           description: >-
             MEF 26.2 sec. 16.12 and 16.13 - For Ingress, this is the Name of the
@@ -1891,6 +1955,13 @@ components:
         Reference MEF 10.4 Section 12 and MEF 26.2 Section 17.
       properties:
         eirMax:
+          description: >-
+            MEF 26.2 sec. 17.1.2 and MEF 10.4 sec. 12.1.2 - eirMax represents
+            Maximum Excess Information Rate. It limits the average rate in bits
+            per second at which External Interface Frames for this Bandwidth
+            Profile Flow can be declared Yellow (regardless of unused excess
+            bandwidth from higher-ranked Bandwidth Profile Flows or unused
+            committed bandwidth).
           $ref: '#/components/schemas/InformationRate'
         envelopeRank:
           description: >-
@@ -1899,8 +1970,20 @@ components:
           minimum: 1
           type: integer
         cirMax:
+          description: >-
+            MEF 26.2 sec. 17.1.2 and MEF 10.4 sec. 12.1.2 - cirMax represents
+            Maximum Committed Information Rate. It limits the average rate in
+            bits per second at which External Interface Frames for this
+            Bandwidth Profile Flow can be declared Green (regardless of unused
+            committed bandwidth from higher-ranked Bandwidth Profile Flows).
           $ref: '#/components/schemas/InformationRate'
         cbs:
+          description: >-
+            MEF 26.2 sec. 17.1.2 and MEF 10.4 sec. 12.1.2 - cbs represents
+            Committed Burst Size. Limits by how much, and for how long, the
+            amount of traffic declared Green for this Bandwidth Profile Flow in
+            the short term can exceed the committed bandwidth made available to
+            this Bandwidth Profile Flow over the long term, in bytes.
           $ref: '#/components/schemas/DataSize'
         couplingFlag:
           description: >-
@@ -1928,6 +2011,12 @@ components:
             the Bandwidth Profile Flow by a fixed number of octets.
           type: integer
         ebs:
+          description: >-
+            MEF 26.2 sec. 17.1.2 and MEF 10.4 sec. 12.1.2 - ebs represents
+            Excess Burst Size. It limits by how much, and for how long, the
+            amount of traffic declared Yellow for this Bandwidth Profile Flow in
+            the short term can exceed the excess bandwidth made available to
+            this Bandwidth Profile Flow over the long term.
           $ref: '#/components/schemas/DataSize'
         colorMode:
           description: >-
@@ -1937,8 +2026,24 @@ components:
             Algorithm can be declared Green.
           $ref: '#/components/schemas/ColorMode'
         cir:
+          description: >-
+            MEF 26.2 sec. 17.1.2 and MEF 10.4 sec. 12.1.2 - cir represents
+            Committed Information Rate. When added to unused committed bandwidth
+            provided from higher-ranked Bandwidth Profile Flows (depending on
+            the value of couplingFlag for the higher-ranked Bandwidth Profile
+            Flows), limits the average rate in bits per second at which External
+            Interface Frames for this Bandwidth Profile Flow can be declared
+            Green.
           $ref: '#/components/schemas/InformationRate'
         eir:
+          description: >-
+            MEF 26.2 sec. 17.1.2 and MEF 10.4 sec. 12.1.2 - eir represents
+            Excess Information Rate. When added to unused excess bandwidth from
+            higher-ranked Bandwidth Profile Flows, and to un-used committed
+            bandwidth (depending on the value of couplingFlag for this Bandwidth
+            Profile Flow and couplingFlagForIndexZero for the Envelope), limits
+            the average rate in bits per second at which External Interface
+            Frames for this Bandwidth Profile Flow can be declared Yellow.
           $ref: '#/components/schemas/InformationRate'
       type: object
     CancelProductOrder:
@@ -1961,7 +2066,8 @@ components:
 
             - Cancel Product Order Contact: `role=cancelProductOrderContact`
 
-            - Seller Contact: `role=sellerContact`
+            - Cancel Product Order Seller Contact:
+            `role=cancelProductOrderSellerContact`
           items:
             $ref: '#/components/schemas/RelatedContactInformation'
           type: array
@@ -1976,27 +2082,20 @@ components:
         id:
           description: >-
             Unique identifier for the Cancel Product Order that is generated by
-            the Seller when the Cancel Product Order request is acknowledged via
-            an API.
-          type: string
-        orderVersion:
-          description: >-
-            The version of the Product Order. Set by the Buyer using Seller
-            specified Product Order Version of the Product Order that is to be
-            cancelled.
+            the Seller when the Cancel Product Order request `state` is set to
+            `acknowledged`
           type: string
         state:
           $ref: '#/components/schemas/MEFChargeableTaskStateType'
         cancellationDeniedReason:
           description: >-
-            If the Cancel Product Order is denied by the Seller, the Seller
-            provides a reason to the Buyer using this attribute.
+            If the Cancel Product Order request is denied by the Seller, the
+            Seller provides a reason to the Buyer using this attribute.
           type: string
         cancellationReasonType:
           $ref: '#/components/schemas/CancellationReasonType'
       required:
         - id
-        - orderVersion
         - productOrder
         - relatedContactInformation
         - state
@@ -2022,31 +2121,43 @@ components:
             value to a `role` is to use the _lowerCamelCase_ pattern e.g.
 
             - Cancel Product Order Contact: `role=cancelProductOrderContact`
-
-            - Seller Contact: `role=sellerContact`
           items:
             $ref: '#/components/schemas/RelatedContactInformation'
           minItems: 1
           type: array
         productOrder:
           $ref: '#/components/schemas/MEFProductOrderRef'
-        orderVersion:
-          description: >-
-            The version of the Product Order. Set by the Buyer using Seller
-            specified Product Order Version of the Product Order that is to be
-            cancelled.
-          type: string
         cancellationReasonType:
           $ref: '#/components/schemas/CancellationReasonType'
       required:
-        - orderVersion
         - productOrder
         - relatedContactInformation
+      type: object
+    CancelProductOrder_Find:
+      description: A response to a Buyer's get List of Cancel Product Orders
+      properties:
+        productOrder:
+          $ref: '#/components/schemas/MEFProductOrderRef'
+        id:
+          description: >-
+            Unique identifier for the Cancel Product Order that is generated by
+            the Seller when the Cancel Product Order request `state` is set to
+            `acknowledged`
+          type: string
+        state:
+          $ref: '#/components/schemas/MEFChargeableTaskStateType'
+        cancellationReasonType:
+          $ref: '#/components/schemas/CancellationReasonType'
+      required:
+        - cancellationReasonType
+        - id
+        - productOrder
+        - state
       type: object
     CancellationReasonType:
       description: >-
         Identifies the type of reason, Technical or Commercial, for the
-        Cancellation Request
+        Cancellation request
       enum:
         - technical
         - commercial
@@ -2070,6 +2181,13 @@ components:
           type: array
           uniqueItems: true
         availableMegLevel:
+          description: >-
+            MEF 10.4 sec. 8.11 - The lowest MEG level for which SOAM Frames are
+            not peered or discarded by the Service Provider. If this attribute
+            is NONE  there is no such level (that is, SOAM frames at all MEG
+            levels may be peered or discarded by the Service Provider). For all
+            Subscriber Ethernet Services defined in MEF 6.3 the value is
+            constrained to the range 0...6.
           $ref: '#/components/schemas/AvailableMegList'
         carrierEthernetSls:
           description: >-
@@ -2078,7 +2196,8 @@ components:
             Service Provider and the Subscriber or between Service Provider and
             the Operator as part of the Service Level Agreement. A given SLS
             might contain 0,1 or more Performance Objectives for each
-            Performance Metric.
+            Performance Metric. If the value of this attribute is an empty list,
+            it is equivalent to a value of None per MEF 10.4.
           items:
             $ref: '#/components/schemas/CarrierEthernetSls'
           maxItems: 1
@@ -2088,10 +2207,7 @@ components:
         maximumFrameSize:
           description: >-
             MEF 10.4 sec. 8.10 - Maximum size of Service frames that can be
-            carried over the EVC. This must be at least 1522 (1518+C-tag). This
-            Service Attribute must be included in POQ, Quote, and Order if the
-            Buyer requires a value that is different than the value agreed on
-            during the on-boarding process between the Buyer and Seller.
+            carried over the EVC. This must be at least 1522 (1518+C-tag).
           minimum: 1522
           type: integer
       type: object
@@ -2111,6 +2227,10 @@ components:
           pattern: "[ -\x7F]+"
           type: string
         subscriberMegMip:
+          description: >-
+            MEF 10.4 sec. 10.13 - The value of the EVC EP Subscriber MEG MIP
+            Service Attribute is either None or an integer in the range 0 � 7
+            that indicates the MEG Level of a Subscriber MEG MIP.
           $ref: '#/components/schemas/MegList'
         egressMap:
           description: >-
@@ -2118,9 +2238,8 @@ components:
             Attribute is None or a map of the form {Corresponding Ingress
             Service Frame Class of Service Name, Corresponding Ingress Service
             Frame Color} to {Egress Service Frame C-Tag PCP value, Egress
-            Service Frame C-Tag DEI value} or Discard. If this property is not
-            present or an empty list, the value is assumed to have the value
-            None.
+            Service Frame C-Tag DEI value} or Discard. If this property is an
+            empty list, the value is assumed to have the value None.
           items:
             $ref: '#/components/schemas/EvcEgressMap'
           maxItems: 1
@@ -2157,13 +2276,25 @@ components:
             The value is None or a non-empty list of pairs of the form ?x,y?,
             where x is a Class of Service Name that is in the value of the EVC
             List of Class of Service Names Service Attribute and y = BWP Flow
-            Parameters. If this property is not present or an empty list, the
-            value is assumed to have the value None.
+            Parameters. If this property is an empty list, the value is assumed
+            to have the value None.
           items:
             $ref: '#/components/schemas/BandwidthProfilePerClassOfServiceName'
           minItems: 0
           type: array
           uniqueItems: true
+      type: object
+    CarrierEthernetEvcEpEline:
+      properties:
+        identifier:
+          description: >-
+            MEF 10.4 sec. 10.1 - The value of the EVC EP ID Service Attribute is
+            a string that is used to allow the Subscriber and Service Provider
+            to uniquely identify the EVC EP for operations purposes.
+          maxLength: 45
+          minLength: 1
+          pattern: "[ -\x7F]+"
+          type: string
       type: object
     CarrierEthernetEvcEpNotEpl:
       description: >-
@@ -2199,14 +2330,28 @@ components:
             value of the EVC List of Class of Service Names Service Attribute
             (MEF 10.4 Section 8.7) but not equal to Discard and y= the 3-tuple
             ?CIR, CIRmax, ER? where the elements of the 3-tuple are defined in
-            MEF 10.4 Section 12.1.2. If this property is not present or an empty
-            list, the value is assumed to have the value None.
+            MEF 10.4 Section 12.1.2. If this property is an empty list, the
+            value is assumed to have the value None.
           items:
             $ref: '#/components/schemas/BandwidthProfilePerClassOfServiceName'
           maxItems: 1
           minItems: 0
           type: array
           uniqueItems: true
+      type: object
+    CarrierEthernetEvcEpVirtualPrivate:
+      properties:
+        evcEndPointMap:
+          description: >-
+            MEF 10.4 sec. 10.4 - The EVC EP Map Service Attribute is used to map
+            Service Frames to the EVC EP. The value of the EVC EP Map Service
+            Attribute (in MEF 10.4) is one of ALL, LIST, or UT/PT. This
+            attribute is only available for Virtual Private services since
+            Private services always require All. For Virtual Private Services it
+            can be UT/PT (Untagged/Priority Tagged) or LIST. When the value of
+            the EVC EP Map Service Attribute = List, a non-empty list of unique
+            integers, each in the range 1,2,�,4094 is specified.
+          $ref: '#/components/schemas/EvcEndPointMap'
         evcEndPointEnvelopes:
           description: >-
             The Envelopes and Envelope Coupling Flag values to which Bandwidth
@@ -2227,11 +2372,6 @@ components:
           type: array
           uniqueItems: true
       type: object
-    CarrierEthernetEvcEpVirtualPrivate:
-      properties:
-        evcEndPointMap:
-          $ref: '#/components/schemas/EndPointMapEvc'
-      type: object
     CarrierEthernetEvcNotEpl:
       description: >-
         These are the MEF 10.4 EVC Service Attributes that are common to all
@@ -2239,6 +2379,15 @@ components:
         Service Attributes in MEF 10.4 - except EPL.
       properties:
         frameDisposition:
+          description: >-
+            MEF 10.4 sec. 8.4 - A 3-tuple that indicates how Unicast, Multicast,
+            and Broadcast Frames are delivered by the service. For each, the
+            value can be UNCONDITIONAL, the frames are delivered without
+            condition, CONDITIONAL, the frames are delivered based on conditions
+            agreed to between Buyer and Seller (e.g., based on learned
+            addresses), and DISCARD. If CONDITIONAL is chosen for any of the
+            elements, the conditions must be agreed on by the Service Provider
+            and Subscriber by some other means.
           $ref: '#/components/schemas/FrameDisposition'
       type: object
     CarrierEthernetPhysicalLink:
@@ -2250,6 +2399,11 @@ components:
         physicalLink:
           description: An Ethernet physical layer
           $ref: '#/components/schemas/PhysicalLink'
+        autoNegotiation:
+          description: >-
+            IEEE Std 802.3-2018 Clause 28 and 37 - Indicates whether 802.3
+            autonegotiation is enabled on the UNI link.
+          $ref: '#/components/schemas/EnabledDisabled'
         id:
           description: An identifier for the physical link.
           maxLength: 45
@@ -2276,23 +2430,38 @@ components:
           description: >-
             MEF 10.4 sec. 8.8 and MEF 26.2 sec. 12.13 - This is a list of
             Performance Metrics. Each entry contains a set of parameters and
-            Performance Metrics one one Class of Service.
+            Performance Metrics for one Class of Service.
           items:
             $ref: '#/components/schemas/SlsCosNameEntry'
           minItems: 1
           type: array
           uniqueItems: true
         startTime:
-          $ref: '#/components/schemas/Time'
+          description: >-
+            MEF 10.4 sec. 8.8 and MEF 26.2 sec. 12.13 - This represents the date
+            and time for the start of the SLS. It is the beginning of the first
+            timeInterval. This is referred to as ts in MEF 10.4 and MEF 26.2.
+            The value is a string in ISO 8601 format.
+          format: date-time
+          type: string
         timeDuration:
-          $ref: '#/components/schemas/LongDuration'
+          description: >-
+            MEF 10.4 sec. 8.8 and MEF 26.2 sec. 12.13 - The timeDuration
+            (referred to as T in MEF 10.4 and 26.2) is a time duration, e.g., 1
+            month, 2 weeks, that is used in conjunction with startTime to
+            specify time intervals for determining when Performance Objectives
+            are met. Note that the units for timeDuration are not constrained;
+            in particular, 1 month is an allowable value, corresponding to a
+            calendar month, e.g. from midnight on the 10th of one month up to
+            but not including midnight the 10th of the following month.
+          $ref: '#/components/schemas/TimeDuration'
       type: object
     CarrierEthernetSubscriberUni:
       allOf:
         - $ref: '#/components/schemas/MEFProductConfiguration'
         - $ref: '#/components/schemas/SubscriberUniCommon'
       x-discriminator-value: >-
-        urn:mef:lso:spec:cantata-sonata:carrier-ethernet-subscriber-uni:v0.2.0:all
+        urn:mef:lso:spec:cantata-sonata:carrier-ethernet-subscriber-uni:v0.3.0:all
     CarrierEthernetVpEvcCommon:
       description: >-
         These are the MEF 10.4 EVC Service Attributes that are common to all
@@ -2300,25 +2469,33 @@ components:
         EVP_TREE) defined in MEF 6.3.
       properties:
         cTagPcpPreservation:
+          description: >-
+            MEF 10.4 sec. 8.5 - The EVC C-Tag PCP Preservation Service Attribute
+            can be used to preserve the value of the PCP field in C-Tagged
+            Service Frames across an EVC. The value of the EVC C-Tag PCP
+            Preservation Service Attribute is either Enabled or Disabled.
           $ref: '#/components/schemas/EnabledDisabled'
         cTagDeiPreservation:
+          description: >-
+            MEF 10.4 sec. 8.6 - If ENABLED, then the value of the C-Tag DEI
+            field is preserved from Ingress to Egress.
           $ref: '#/components/schemas/EnabledDisabled'
       type: object
     ColorFrom:
       discriminator:
         mapping:
-          DSCP: '#/components/schemas/ColorFromDscp'
-          PCP: '#/components/schemas/ColorFromPCP'
-          DEI: '#/components/schemas/ColorFromDei'
           ENDPOINT: '#/components/schemas/ColorFromEp'
+          DEI: '#/components/schemas/ColorFromDei'
+          PCP: '#/components/schemas/ColorFromPCP'
+          DSCP: '#/components/schemas/ColorFromDscp'
         propertyName: mapType
       properties:
         mapType:
           enum:
-            - DSCP
-            - PCP
-            - DEI
             - ENDPOINT
+            - DEI
+            - PCP
+            - DSCP
           type: string
       required:
         - mapType
@@ -2327,9 +2504,10 @@ components:
       allOf:
         - $ref: '#/components/schemas/ColorFrom'
         - description: >-
-            This Class is referenced when the color comes from the S-tag or
-            C-tag DEI field. MEF 26.2 requires that DEI=0 means Green and DEI=1
-            means Yellow, so no map is needed.
+            This Class is referenced when the color comes from the C-tag DEI
+            field (for EVCs and OVCs) or the S-tag DEI field for OVCs. MEF 10.4
+            (EVCs) and  MEF 26.2 (OVCs) requires that DEI=0 means Green and
+            DEI=1 means Yellow, so no map is needed.
           type: object
       x-discriminator-value: DEI
     ColorFromDscp:
@@ -2493,8 +2671,10 @@ components:
       description: 'This is a 3-tuple {ipv4list, ipv6list, cosName}'
       properties:
         ipv4List:
+          description: List of IPv4 DSCP values
           $ref: '#/components/schemas/DscpValues'
         ipv6List:
+          description: List of IPv6 DSCP values
           $ref: '#/components/schemas/DscpValues'
         cosName:
           type: string
@@ -2502,16 +2682,16 @@ components:
     CosFrom:
       discriminator:
         mapping:
-          C_TAG_PCP: '#/components/schemas/CosFromCtagPcp'
           ENDPOINT: '#/components/schemas/CosFromEp'
+          C_TAG_PCP: '#/components/schemas/CosFromCtagPcp'
           DSCP: '#/components/schemas/CosFromDscp'
         propertyName: mapType
       properties:
         mapType:
-          description: The Field that indicates F = C_TAG_PCP.
+          description: The Field that indicates F = DSCP.
           enum:
-            - C_TAG_PCP
             - ENDPOINT
+            - C_TAG_PCP
             - DSCP
           type: string
       required:
@@ -2536,7 +2716,7 @@ components:
               type: array
               uniqueItems: true
             l2cp_P:
-              description: This specifies the CoS Name for L2CPs carried over the OVC.
+              description: This specifies the CoS Name for L2CPs carried over the EVC/OVC.
               items:
                 $ref: '#/components/schemas/CosL2cp'
               minItems: 0
@@ -2555,6 +2735,9 @@ components:
             Packets.
           properties:
             map_M:
+              description: >-
+                This maps DSCP values to CoS Names for each of IPv4 and IPv6 and
+                also to non-IP packets.
               $ref: '#/components/schemas/CosDscpMap'
             l2cp_P:
               description: This specifies the CoS Names for L2CPs carried over the EVC/OVC.
@@ -2588,6 +2771,7 @@ components:
       description: '2-tuple {L2CP Ident, CoS Name}'
       properties:
         l2cpIdentifier:
+          description: MEF 45.1 sec. 8.2 - Protocol Identifier
           $ref: '#/components/schemas/L2cpProtocol'
         l2cpCosName:
           description: CoS Name String to associate with the L2CP
@@ -2602,7 +2786,9 @@ components:
           description: A PCP value from 0 to 7 or UNTAGGED
           $ref: '#/components/schemas/PcpVal'
         pcpCosName:
-          description: A CoS Name or DISCARD
+          description: >-
+            A CoS Name from the EVC/OVC List of Class of Service Names Service
+            Attribute.
           type: string
       type: object
     DataSize:
@@ -2614,7 +2800,7 @@ components:
           description: >-
             The unit of measure in the data size. For example, if a burst size
             is 40 KBYTES, this element is KBYTES. Note that the units indicate
-            binary values, e.g., KBYTES is 1024 bytes.amd
+            binary values, e.g., KBYTES is 1024 bytes.
           $ref: '#/components/schemas/DataSizeUnits'
         dataSizeValue:
           description: >-
@@ -2626,7 +2812,7 @@ components:
       description: >-
         The unit of measure in the data size. For example, if a burst size is 40
         KBYTES, this element is KBYTES. Note that the units indicate binary
-        values, e.g., KBYTES is 1024 bytes.amd
+        values, e.g., KBYTES is 1024 bytes.
       enum:
         - BYTES
         - KBYTES
@@ -2675,31 +2861,6 @@ components:
         - ENABLED
         - DISABLED
       type: string
-    EndPointMapEvc:
-      description: >-
-        MEF 10.4 sec. 10.4 - This is specifications for which Service Frames are
-        mapped to the EVC End Point. The allowed values in MEF 10.4 are ALL,
-        LIST, and UT/PT. Since Private services must be ALL, the map isn't
-        needed for those services, and therefore the type does not include ALL.
-        If the type is LIST there must be a list of VLAN IDs specified.
-      properties:
-        vlanId:
-          description: A list of VLAN IDs if the value of vlanType is "LIST"
-          items:
-            maximum: 4094
-            minimum: 1
-            type: integer
-          maxItems: 4094
-          minItems: 1
-          type: array
-          uniqueItems: true
-        vlanType:
-          description: >-
-            An indication of the type EVC End Point Map. If the value is UT/PT
-            then no additional information is required. If the value is LIST
-            then a list of C-VLAN ID values must be specified.
-          $ref: '#/components/schemas/VlanType'
-      type: object
     Envelope:
       description: >-
         Bandwidth Profiles are organized into Envelopes. Multiple Bandwidth
@@ -2731,13 +2892,23 @@ components:
         - $ref: '#/components/schemas/CarrierEthernetEvcCommon'
         - properties:
             evcEndPointA:
+              description: >-
+                MEF 10.4 sec. 10 - EVC End Point at UNI A. UNI EVC End Point A
+                and UNI EVC End Point Z must be included in the EPL Product.
               $ref: '#/components/schemas/EplEvcEndPoint'
             evcEndPointZ:
+              description: >-
+                MEF 10.4 sec. 10 - EVC End Point at UNI Z. UNI EVC End Point A
+                and UNI EVC End Point Z must be included in the EPL Product.
               $ref: '#/components/schemas/EplEvcEndPoint'
+          required:
+            - evcEndPointA
+            - evcEndPointZ
           type: object
-      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:epl:v0.2.0:all'
+      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:epl:v0.3.0:all'
     EplEvcEndPoint:
       allOf:
+        - $ref: '#/components/schemas/CarrierEthernetEvcEpEline'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpCommon'
       description: >-
         An EVC End Point is a logical entity at a given UNI that is associated
@@ -2751,25 +2922,25 @@ components:
         - $ref: '#/components/schemas/MEFProductConfiguration'
         - $ref: '#/components/schemas/CarrierEthernetEvcCommon'
         - $ref: '#/components/schemas/CarrierEthernetEvcNotEpl'
-      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:eplan:v0.2.0:all'
+      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:eplan:v0.3.0:all'
     EplanEndpoint:
       allOf:
         - $ref: '#/components/schemas/MEFProductConfiguration'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpCommon'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpNotEpl'
-      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:eplan-endpoint:v0.2.0:all'
+      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:eplan-endpoint:v0.3.0:all'
     Eptree:
       allOf:
         - $ref: '#/components/schemas/MEFProductConfiguration'
         - $ref: '#/components/schemas/CarrierEthernetEvcCommon'
         - $ref: '#/components/schemas/CarrierEthernetEvcNotEpl'
-      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:eptree:v0.2.0:all'
+      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:eptree:v0.3.0:all'
     EptreeEndpoint:
       allOf:
         - $ref: '#/components/schemas/MEFProductConfiguration'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpCommon'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpNotEpl'
-      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:eptree-endpoint:v0.2.0:all'
+      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:eptree-endpoint:v0.3.0:all'
     Error:
       description: >
         Standard Class used to describe API response error Not intended to be
@@ -2986,10 +3157,14 @@ components:
         This map is a table with one entries for each CosName, that includes the
         CoSName, a PCP value for green frames, a PCP value for yellow frames, a
         DEI value for green frames and a DEI value for yellow frames. Any of the
-        values can be DISCARD (in which case they are all treated as DISCARD).
-        This table is used at the UNI for EVCs.
+        values can be DISCARD. This table is used at the UNI for EVCs.
       properties:
         evcEgressMapEntries:
+          description: >-
+            This is a table of EVC Egress Map entries. An empty list indicates a
+            value of None. Per R140 in MEF 10.4, the value of the EVC EP Egress
+            Map Service Attribute MUST NOT be None unless one of the conditions
+            noted in the requirement is met. (See Validation Notes)
           items:
             $ref: '#/components/schemas/EvcEgressMapEntry'
           minItems: 0
@@ -3002,15 +3177,44 @@ components:
         DEIGreen, DEIYellow
       properties:
         pcpYellow:
+          description: A PCP value (0-7) or DISCARD to use for Yellow frames
           $ref: '#/components/schemas/PcpValueAndDiscard'
         deiYellow:
+          description: A DEI value to use for Yellow frames
           $ref: '#/components/schemas/DeiValueAndDiscard'
         cosName:
           type: string
         deiGreen:
+          description: A DEI value to use for Green frames
           $ref: '#/components/schemas/DeiValueAndDiscard'
         pcpGreen:
+          description: A PCP value (0-7) or DISCARD to use for Green Frames
           $ref: '#/components/schemas/PcpValueAndDiscard'
+      type: object
+    EvcEndPointMap:
+      description: >-
+        MEF 10.4 sec. 10.4 - This is specifications for which Service Frames are
+        mapped to the EVC End Point. The allowed values in MEF 10.4 are ALL,
+        LIST, and UT/PT. Since Private services must be ALL, the map isn't
+        needed for those services, and therefore the type does not include ALL.
+        If the type is LIST there must be a list of VLAN IDs specified.
+      properties:
+        vlanId:
+          description: A list of VLAN IDs if the value of vlanType is "LIST"
+          items:
+            maximum: 4094
+            minimum: 1
+            type: integer
+          maxItems: 4094
+          minItems: 1
+          type: array
+          uniqueItems: true
+        vlanType:
+          description: >-
+            An indication of the type of EVC End Point Map. If the value is
+            UT/PT then no additional information is required. If the value is
+            LIST then a list of C-VLAN ID values must be specified.
+          $ref: '#/components/schemas/VlanType'
       type: object
     EventSubscription:
       description: |
@@ -3059,7 +3263,7 @@ components:
             notification is sent. E.g. for "callback":
             "https://buyer.co/listenerEndpoint", the product order state change
             event notification will be sent to:
-            `https://buyer.co/listenerEndpoint/mefApi/cantata/productOrderNotification/v3/listener/productOrderStateChangeEvent`
+            `https://buyer.co/listenerEndpoint/mefApi/cantata/productOrderNotification/v4/listener/productOrderStateChangeEvent`
           type: string
       required:
         - callback
@@ -3072,13 +3276,23 @@ components:
         - $ref: '#/components/schemas/CarrierEthernetEvcNotEpl'
         - properties:
             evcEndPointA:
+              description: >-
+                MEF 10.4 sec. 10 - EVC Endpoint at UNI A. UNI EVC End Point A
+                and UNI EVC End Point Z must be included in the EVPL Product.
               $ref: '#/components/schemas/EvplEvcEndPoint'
             evcEndPointZ:
+              description: >-
+                MEF 10.4 sec. 10 - EVC Endpoint at UNI Z. UNI EVC End Point A
+                and UNI EVC End Point Z must be included in the EVPL Product.
               $ref: '#/components/schemas/EvplEvcEndPoint'
+          required:
+            - evcEndPointA
+            - evcEndPointZ
           type: object
-      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:evpl:v0.2.0:all'
+      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:evpl:v0.3.0:all'
     EvplEvcEndPoint:
       allOf:
+        - $ref: '#/components/schemas/CarrierEthernetEvcEpEline'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpCommon'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpVirtualPrivate'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpNotEpl'
@@ -3095,28 +3309,28 @@ components:
         - $ref: '#/components/schemas/CarrierEthernetEvcCommon'
         - $ref: '#/components/schemas/CarrierEthernetVpEvcCommon'
         - $ref: '#/components/schemas/CarrierEthernetEvcNotEpl'
-      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:evplan:v0.2.0:all'
+      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:evplan:v0.3.0:all'
     EvplanEndpoint:
       allOf:
         - $ref: '#/components/schemas/MEFProductConfiguration'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpCommon'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpVirtualPrivate'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpNotEpl'
-      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:evplan-endpoint:v0.2.0:all'
+      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:evplan-endpoint:v0.3.0:all'
     Evptree:
       allOf:
         - $ref: '#/components/schemas/MEFProductConfiguration'
         - $ref: '#/components/schemas/CarrierEthernetEvcCommon'
         - $ref: '#/components/schemas/CarrierEthernetVpEvcCommon'
         - $ref: '#/components/schemas/CarrierEthernetEvcNotEpl'
-      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:evptree:v0.2.0:all'
+      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:evptree:v0.3.0:all'
     EvptreeEndpoint:
       allOf:
         - $ref: '#/components/schemas/MEFProductConfiguration'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpCommon'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpVirtualPrivate'
         - $ref: '#/components/schemas/CarrierEthernetEvcEpNotEpl'
-      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:evptree-endpoint:v0.2.0:all'
+      x-discriminator-value: 'urn:mef:lso:spec:cantata-sonata:evptree-endpoint:v0.3.0:all'
     FieldedAddress:
       allOf:
         - $ref: '#/components/schemas/RelatedPlaceRefOrValue'
@@ -3406,6 +3620,10 @@ components:
         Peering Service Attribute
       properties:
         protocolID:
+          description: >-
+            This specifies the Protocol Type for the L2CP. It consists of a
+            field specification (ETHERTYPE or LLC), the EtherType or LLC value,
+            and an optional subtype.
           $ref: '#/components/schemas/L2cpProtocol'
         destinationAddress:
           description: >-
@@ -3457,32 +3675,6 @@ components:
         - 2_LINK_ACTIVE_STANDBY
         - ALL_ACTIVE
         - OTHER
-      type: string
-    LongDuration:
-      description: >-
-        This class is used to describe durations expressed in days or larger
-        time units
-      properties:
-        longDurationUnits:
-          description: >-
-            The unit of measure in the duration. For example, if an interval is
-            2 weeks, this element is WEEKS.
-          $ref: '#/components/schemas/LongDurationUnits'
-        longDurationValue:
-          description: >-
-            The value of the duration. For example, if the duration is 20 days,
-            this element is 20.
-          type: integer
-      type: object
-    LongDurationUnits:
-      description: >-
-        The unit of measure in the duration. For example, if an interval is 2
-        weeks, this element is WEEKS.
-      enum:
-        - DAY
-        - WEEK
-        - MONTH
-        - YEAR
       type: string
     MEFAcceptedRejectedType:
       description: Indicator of acceptance
@@ -3562,7 +3754,7 @@ components:
         state.                                                                                                                                                                                                                        
         |
 
-        | done                       | COMPLETED        | A Modify Product Order
+        | done                       | ACCEPTED         | A Modify Product Order
         Item Requested Delivery Date request has been received, passed all
         validations, if a Charge is associated all Charge Items have been
         accepted by the Buyer, and the Product Order Item Completion Date has
@@ -3580,8 +3772,7 @@ components:
         Item Requested Delivery Date request was submitted by the Buyer, and it
         has failed any validation checks the Seller performs during the
         `acknowledged` state. No updates are made to the referenced Product
-        Order
-        Item.                                                                                                                                                                          
+        Order Item.
       enum:
         - acknowledged
         - done
@@ -3654,6 +3845,29 @@ components:
           type: string
         rollInterval:
           $ref: '#/components/schemas/Duration'
+      required:
+        - duration
+        - endOfTermAction
+        - name
+      type: object
+    MEFMilestone:
+      description: >-
+        Milestones associated to the Product Order Item. Set by the Seller when
+        a Milestone occurs.
+      properties:
+        date:
+          description: The date on when the milestone was reached
+          format: date-time
+          type: string
+        note:
+          description: Additional comment related to milestone change.
+          type: string
+        name:
+          description: Name of the Milestone.
+          type: string
+      required:
+        - date
+        - name
       type: object
     MEFModifyProductOrderItemRequestedDeliveryDate:
       description: >-
@@ -3680,12 +3894,6 @@ components:
             the Seller when the MEFModifyProductOrderItemRequestedDeliveryDate
             request is moved to the 'acknowledged' state.
           type: string
-        orderVersion:
-          description: >-
-            The version of the Product Order. Set by the Buyer using Seller
-            specified Product Order Version of the Product Order that is to be
-            modified.
-          type: string
         state:
           $ref: '#/components/schemas/MEFChargeableTaskStateType'
         creationDate:
@@ -3703,7 +3911,6 @@ components:
       required:
         - creationDate
         - id
-        - orderVersion
         - productOrderItem
         - state
       type: object
@@ -3735,12 +3942,6 @@ components:
             Default Value = FALSE. If this is set to TRUE, the Buyer sets the
             Requested Completion Date to the expedited date
           type: boolean
-        orderVersion:
-          description: >-
-            The version of the Product Order. Set by the Buyer using Seller
-            specified Product Order Version of the Product Order that is to be
-            modified.
-          type: string
         productOrderItem:
           $ref: '#/components/schemas/MEFProductOrderItemRef'
         requestedCompletionDate:
@@ -3748,7 +3949,6 @@ components:
           format: date-time
           type: string
       required:
-        - orderVersion
         - productOrderItem
       type: object
     MEFOrderItemCoordinatedAction:
@@ -3776,31 +3976,41 @@ components:
 
 
         | OrderItemCoordinationDependencyType | MEF 57.2         |
-        Description                                                                                            
+        Description                                                                                                       
         |
 
-        |-------------------------------------|------------------|---------------------------------------------------------------------------------------------------------|
+        |-------------------------------------|------------------|--------------------------------------------------------------------------------------------------------------------|
 
         | startToStart                        | START_TO_START   | Work on the
-        specified Product Order Item begins at the same time as the related
-        Product Order Item      |
+        Specified Product Order Item can only be started after the Coordinated
+        Product Order Items are started |
 
-        | startToFinish                       | START_TO_FINISH  | Work on the
-        specified Product Order Item begins upon the completion of the related
-        Product Order Item   |
+        | startToFinish                       | START_TO_FINISH  | The
+        Coordinated Product Order Items must complete before work on the
+        Specified Product Order Item begins           |
 
         | finishToStart                       | FINISH_TO_START  | Work on the
-        related Product Order Item begins after the completion of the specified
-        Product Order Item |
+        Related Product Order Items begins after the completion of the Specified
+        Product Order Item            |
 
         | finishToFinish                      | FINISH_TO_FINISH | Work on the
-        related Product Order Item completes at the same time as the specified
-        Product Order Item  |
+        Related Product Order Items completes at the same time as the Specified
+        Product Order Item             |
       enum:
         - startToStart
         - startToFinish
         - finishToStart
         - finishToFinish
+      type: string
+    MEFPriceCategory:
+      description: A description of the cause of the Charge Item
+      enum:
+        - cancellation
+        - construction
+        - connection
+        - disconnect
+        - expedite
+        - other
       type: string
     MEFPriceType:
       description: Indicates if the price is for recurring or non-recurring charges.
@@ -3830,17 +4040,17 @@ components:
         discriminator
       discriminator:
         mapping:
-          'urn:mef:lso:spec:cantata-sonata:evpl:v0.2.0:all': '#/components/schemas/Evpl'
-          'urn:mef:lso:spec:cantata-sonata:evplan-endpoint:v0.2.0:all': '#/components/schemas/EvplanEndpoint'
-          'urn:mef:lso:spec:cantata-sonata:carrier-ethernet-subscriber-uni:v0.2.0:all': '#/components/schemas/CarrierEthernetSubscriberUni'
-          'urn:mef:lso:spec:cantata-sonata:evplan:v0.2.0:all': '#/components/schemas/Evplan'
-          'urn:mef:lso:spec:cantata-sonata:eplan:v0.2.0:all': '#/components/schemas/Eplan'
-          'urn:mef:lso:spec:cantata-sonata:eplan-endpoint:v0.2.0:all': '#/components/schemas/EplanEndpoint'
-          'urn:mef:lso:spec:cantata-sonata:epl:v0.2.0:all': '#/components/schemas/Epl'
-          'urn:mef:lso:spec:cantata-sonata:evptree:v0.2.0:all': '#/components/schemas/Evptree'
-          'urn:mef:lso:spec:cantata-sonata:evptree-endpoint:v0.2.0:all': '#/components/schemas/EvptreeEndpoint'
-          'urn:mef:lso:spec:cantata-sonata:eptree-endpoint:v0.2.0:all': '#/components/schemas/EptreeEndpoint'
-          'urn:mef:lso:spec:cantata-sonata:eptree:v0.2.0:all': '#/components/schemas/Eptree'
+          'urn:mef:lso:spec:cantata-sonata:evplan:v0.3.0:all': '#/components/schemas/Evplan'
+          'urn:mef:lso:spec:cantata-sonata:carrier-ethernet-subscriber-uni:v0.3.0:all': '#/components/schemas/CarrierEthernetSubscriberUni'
+          'urn:mef:lso:spec:cantata-sonata:evplan-endpoint:v0.3.0:all': '#/components/schemas/EvplanEndpoint'
+          'urn:mef:lso:spec:cantata-sonata:evpl:v0.3.0:all': '#/components/schemas/Evpl'
+          'urn:mef:lso:spec:cantata-sonata:eptree:v0.3.0:all': '#/components/schemas/Eptree'
+          'urn:mef:lso:spec:cantata-sonata:eptree-endpoint:v0.3.0:all': '#/components/schemas/EptreeEndpoint'
+          'urn:mef:lso:spec:cantata-sonata:evptree-endpoint:v0.3.0:all': '#/components/schemas/EvptreeEndpoint'
+          'urn:mef:lso:spec:cantata-sonata:evptree:v0.3.0:all': '#/components/schemas/Evptree'
+          'urn:mef:lso:spec:cantata-sonata:epl:v0.3.0:all': '#/components/schemas/Epl'
+          'urn:mef:lso:spec:cantata-sonata:eplan-endpoint:v0.3.0:all': '#/components/schemas/EplanEndpoint'
+          'urn:mef:lso:spec:cantata-sonata:eplan:v0.3.0:all': '#/components/schemas/Eplan'
         propertyName: '@type'
       properties:
         '@type':
@@ -3849,18 +4059,18 @@ components:
             for the product that is the subject of the Product Order Request.
             The named type must be a subclass of MEFProductConfiguration.
           enum:
-            - 'urn:mef:lso:spec:cantata-sonata:evpl:v0.2.0:all'
-            - 'urn:mef:lso:spec:cantata-sonata:evplan-endpoint:v0.2.0:all'
+            - 'urn:mef:lso:spec:cantata-sonata:evplan:v0.3.0:all'
             - >-
-              urn:mef:lso:spec:cantata-sonata:carrier-ethernet-subscriber-uni:v0.2.0:all
-            - 'urn:mef:lso:spec:cantata-sonata:evplan:v0.2.0:all'
-            - 'urn:mef:lso:spec:cantata-sonata:eplan:v0.2.0:all'
-            - 'urn:mef:lso:spec:cantata-sonata:eplan-endpoint:v0.2.0:all'
-            - 'urn:mef:lso:spec:cantata-sonata:epl:v0.2.0:all'
-            - 'urn:mef:lso:spec:cantata-sonata:evptree:v0.2.0:all'
-            - 'urn:mef:lso:spec:cantata-sonata:evptree-endpoint:v0.2.0:all'
-            - 'urn:mef:lso:spec:cantata-sonata:eptree-endpoint:v0.2.0:all'
-            - 'urn:mef:lso:spec:cantata-sonata:eptree:v0.2.0:all'
+              urn:mef:lso:spec:cantata-sonata:carrier-ethernet-subscriber-uni:v0.3.0:all
+            - 'urn:mef:lso:spec:cantata-sonata:evplan-endpoint:v0.3.0:all'
+            - 'urn:mef:lso:spec:cantata-sonata:evpl:v0.3.0:all'
+            - 'urn:mef:lso:spec:cantata-sonata:eptree:v0.3.0:all'
+            - 'urn:mef:lso:spec:cantata-sonata:eptree-endpoint:v0.3.0:all'
+            - 'urn:mef:lso:spec:cantata-sonata:evptree-endpoint:v0.3.0:all'
+            - 'urn:mef:lso:spec:cantata-sonata:evptree:v0.3.0:all'
+            - 'urn:mef:lso:spec:cantata-sonata:epl:v0.3.0:all'
+            - 'urn:mef:lso:spec:cantata-sonata:eplan-endpoint:v0.3.0:all'
+            - 'urn:mef:lso:spec:cantata-sonata:eplan:v0.3.0:all'
           type: string
       required:
         - '@type'
@@ -3879,11 +4089,9 @@ components:
       properties:
         cancelProductOrder:
           $ref: '#/components/schemas/MEFCancelProductOrderRef'
-        replacedCharge:
-          $ref: '#/components/schemas/MEFProductOrderChargeRef'
         responseDueDate:
           description: >-
-            The date that the Buyer must respond to the Seller's Charge. If
+            The date by which the Buyer must respond to the Seller's Charge. If
             there is no response received by the Due Date the Seller will treat
             all charges as declined and move them to `declinedByBuyer` status
             and put the Charge to `completed` status.
@@ -3918,6 +4126,7 @@ components:
             #/components/schemas/MEFModifyProductOrderItemRequestedDeliveryDateRef
       required:
         - chargeItem
+        - creationDate
         - id
         - responseDueDate
         - state
@@ -3932,6 +4141,13 @@ components:
     MEFProductOrderChargeItem:
       description: A single component part of the Charge
       properties:
+        note:
+          description: >
+            Free form text to clarify or explain the Charge Item. Only new notes
+            can be entered. The Seller cannot modify an existing Note.
+          items:
+            $ref: '#/components/schemas/Note'
+          type: array
         acceptanceIndicator:
           $ref: '#/components/schemas/MEFAcceptedRejectedType'
         unitOfMeasure:
@@ -3947,14 +4163,12 @@ components:
           type: boolean
         price:
           $ref: '#/components/schemas/Price'
-        chargeType:
+        priceCategory:
+          $ref: '#/components/schemas/MEFPriceCategory'
+        priceType:
           $ref: '#/components/schemas/MEFPriceType'
-        description:
-          $ref: '#/components/schemas/MEFProductOrderChargeItemDescription'
         id:
-          description: >-
-            An identifier that is unique among all Charge Items within a Charge
-            associated with a Product Order Item
+          description: An identifier that is unique among all Charge Items within a Charge
           type: string
         state:
           $ref: '#/components/schemas/MEFProductOrderChargeItemStateType'
@@ -3965,51 +4179,51 @@ components:
       required:
         - activityType
         - blocking
-        - chargeType
-        - description
         - id
         - price
+        - priceCategory
+        - priceType
         - state
       type: object
-    MEFProductOrderChargeItemDescription:
-      description: A description of the cause of the Charge Item
-      enum:
-        - cancellation
-        - construction
-        - connection
-        - disconnect
-        - expedite
-      type: string
     MEFProductOrderChargeItemStateType:
       description: >
         Possible values for the state of the Charge Item
 
 
-        | State               |
-        Description                                                                                                                                      
+        | State               | MEF 57.2 Name       |
+        Description                                                                                                                                                                                                                                                                                                                                       
         |
 
-        | ------------------- |
-        -------------------------------------------------------------------------------------------------------------------------------------------------
+        | ------------------- | ------------------- |
+        --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         |
 
-        | `acceptedByBuyer`   | A Charge Item identified in the Charge has been
-        accepted by the
-        Buyer.                                                                           
+        | `awaitingResponse`  | AWAITING_RESPONSE   | A Charge has been
+        initiated by the Buyer. The charge includes one or more charges related
+        to a Product Order or Product Order Item. Buyer has not indicated
+        whether they accept or reject the charges via a Respond to Charge
+        request.                                                                                                            
         |
 
-        | `awaitingResponse`  | A Charge Item has been identified by the Seller
-        and awaits Buyer's
-        acceptance.                                                                   
+        | `completed`         | COMPLETED           | All Charge Items included
+        in the Charge for a given Product Order Item have moved to either the
+        `acceptedByBuyer` state, the `declinedByBuyer` state, or the
+        `withdrawnBySeller`
+        state.                                                                                                                                                           
         |
 
-        | `declinedByBuyer`   | A Charge Item identified in the Charge has been
+        | `timeout`           | TIMEOUT             | A Charge Item has been
         declined by the Buyer. The referenced Product Order and Product Order
-        Items are updated.          |
+        Items are updated. If a Blocking charge is declined, the Seller may
+        cancel the referenced Product Order Item and any related Product Order
+        Items, the related Cancel Product Order, or the related Modify Product
+        Order Item Requested Delivery Date. |
 
-        | `withdrawnBySeller` | The Seller determines that the Charge Item is
-        incorrect. They withdraw the Charge Item and initiate a new Charge with
-        the required correction(s). |
+        | `withdrawnBySeller` | WITHDRAWN_BY_SELLER | The Seller determines that
+        the Charge Item is incorrect. They withdraw the Charge Item and initiate
+        a new Charge with the required correction(s) if
+        needed.                                                                                                                                                                                       
+        |
       enum:
         - awaitingResponse
         - acceptedByBuyer
@@ -4021,6 +4235,13 @@ components:
         A type used to perform Buyer's response to a Charge Item - to accept or
         reject it.
       properties:
+        note:
+          description: >
+            Free form text to clarify or explain the Charge Item. Only new notes
+            can be entered. The Seller cannot modify an existing Note.
+          items:
+            $ref: '#/components/schemas/Note'
+          type: array
         acceptanceIndicator:
           $ref: '#/components/schemas/MEFAcceptedRejectedType'
         id:
@@ -4078,6 +4299,35 @@ components:
         - timeout
         - withdrawnBySeller
       type: string
+    MEFProductOrderCharge_Find:
+      description: A response object for Buyer's get Charge List request.
+      properties:
+        responseDueDate:
+          description: >-
+            The date by which the Buyer must respond to the Seller's Charge. If
+            there is no response received by the Due Date the Seller will treat
+            all charges as declined and move them to `declinedByBuyer` status
+            and put the Charge to `completed` status.
+          format: date-time
+          type: string
+        productOrder:
+          $ref: '#/components/schemas/MEFProductOrderRef'
+        id:
+          description: A unique identifier of the Charge
+          type: string
+        state:
+          $ref: '#/components/schemas/MEFProductOrderChargeStateType'
+        creationDate:
+          description: Date that the Charge was created by the Seller.
+          format: date-time
+          type: string
+        productOrderItem:
+          $ref: '#/components/schemas/MEFProductOrderItemRef'
+      required:
+        - id
+        - responseDueDate
+        - state
+      type: object
     MEFProductOrderCharge_Update:
       description: >-
         A subset of MEFProductOrderCharge that is allowed to be updated by the
@@ -4247,7 +4497,8 @@ components:
             new notes can be entered. The Buyer and Seller cannot modify an
             existing Note. The Buyer creates a Note when creating the Product
             Order Item or when updating it. The Seller may add notes at any
-            time.
+            time. This is not to be used to inform the Seller of Actions that
+            the Buyer wishes performed.
           items:
             $ref: '#/components/schemas/Note'
           type: array
@@ -4373,8 +4624,8 @@ components:
         relatedContactInformation:
           description: >-
             Contact information of an individual or organization playing a role
-            for this Order Item. Buyer may only update the Buyer-related
-            contacts.
+            for this Order Item. Buyer can modify, add, or delete only
+            Buyer-related contacts.
 
             The rule for mapping a represented attribute
 
@@ -4443,11 +4694,11 @@ components:
 
 
         | state                           | MEF 57.2 name          |
-        Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+        Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
         |
 
         | ------------------------------- | ---------------------- |
-        ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         |
 
         | `acknowledged`                  | ACKNOWLEDGED           | A Product
@@ -4459,20 +4710,21 @@ components:
         Order and Product Order Item attributes are validated the Product Order
         moves to the `inProgress` state. If not validated, the Product Order
         moves to the `rejected`
-        state.                                                                                                                                                                                                               
+        state.                                                                                                                                                                                                                                              
         |
 
-        | `assessingCancellation`         | ASSESSING_CANCELLATION | A request
-        has been made by the Buyer to cancel the Product Order and the Product
-        Order is currently being assessed to determine whether it can be
-        cancelled. If there are any charges associated with the Buyer's Cancel
-        Request, the Seller initiates a Charge which communicates the related
-        charges to the Buyer, the Product Order remains in the
-        `assessingCancellation` state until the Charge is completed or withdrawn
-        by the Seller. Once the cancellation assessment is complete, the Product
-        Order moves to the `pendingCancellation`
-        state.                                                                                                                                                                                                  
-        |
+        | `assessingCancellation`         | ASSESSING_CANCELLATION | A Cancel
+        Product Order request has been received by the Seller. The Product Order
+        is being assessed to determine if the Product Order can be cancelled. If
+        there are charges associated with cancelling the Product Order, these
+        are communicated to the Buyer using the Charge process. The Product
+        Order remains in the `assessingCancellation` state until any relevant
+        Charge is completed or withdrawn by the Seller. Once the Buyer's request
+        has been validated and any associated Charges completed, the Product
+        Order moves to the `pendingCancellation` state. If the request is not
+        validated or if any associated Charges are not completed, the Product
+        Order moves to the `inProgress` state and the Product Order is not
+        cancelled.                                       |
 
         | `held.assessingCharge`          | ASSESSING_CHARGE       | A Charge
         has been initiated by the Seller that is not the result of a Modify
@@ -4482,10 +4734,10 @@ components:
         Order moves to `inProgress`. If a non-blocking charge is declined by the
         Buyer, the Product Order moves to `inProgress`. If a blocking charge is
         declined by the Buyer and there are no unrelated Product Order Items in
-        the Product Order, the Product Order moves to the FAILED state. If a
-        blocking charge is declined by the Buyer and there are unrelated Product
-        Order Items in the Product Order, the Product Order moves to the
-        `inProgress` state. |
+        the Product Order, the Product Order moves to the `inProgress` and then
+        to the `failed` state. If a blocking charge is declined by the Buyer and
+        there are unrelated Product Order Items in the Product Order, the
+        Product Order moves to the `inProgress` state. |
 
         | `pending.assessingModification` | ASSESSING_MODIFICATION | A request
         has been made by the Buyer to modify either the `expediteIndicator` or
@@ -4497,12 +4749,12 @@ components:
         until the Charge is completed or withdrawn by the Seller. Once the
         Buyer's request has been validated and any associated Charges completed,
         the Product Order returns to the `inProgress`
-        state.                                                                                                      
+        state.                                                                                                                                     
         |
 
         | `cancelled`                     | CANCELLED              | The Product
         Order has been successfully cancelled. This is a terminal
-        state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+        state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
         |
 
         | `pendingCancellation`           | CANCELLING             | The Buyer's
@@ -4510,36 +4762,36 @@ components:
         feasible to proceed with the cancellation. This state can also result
         from a Seller cancelling the Product Order within their systems without
         a request from the
-        Buyer.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        Buyer.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
         |
 
         | `completed`                     | COMPLETED              | The Product
         Order has completed fulfillment and the Product is now active. This is a
         terminal
-        state                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+        state                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
         |
 
         | `failed`                        | FAILED                 | All Product
         Order Items have failed which results in the entire Product Order
         failing. This is a terminal
-        state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+        state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
         |
 
         | `inProgress`                    | IN_PROGRESS            | The Product
         Order has been successfully validated, and fulfillment has
-        started.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+        started.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
         |
 
         | `partial`                       | PARTIAL                | Fulfillment
         of at least one Product Order Item has failed, and fulfillment of at
         least one Product Order Item has been successful. This is a terminal
-        state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+        state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
         |
 
         | `rejected`                      | REJECTED               | A Product
         Order was submitted, and it has failed at least one of the validation
         checks the Seller performs after it reached the `acknowledged`
-        state                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        state                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
         |
       enum:
         - acknowledged
@@ -4688,6 +4940,10 @@ components:
         End Point Pairs.
       properties:
         oneWayAvailabilityObjective:
+          description: >-
+            MEF 10.4 sec. 8.8.7 and MEF 26.2 sec.12.13.7 - The PM Objective for
+            this Performance Metric (this CoS and these Ordered End Point Pairs)
+            expressed as a percentage.
           $ref: '#/components/schemas/Percentage'
         orderedPairList:
           description: >-
@@ -4704,19 +4960,24 @@ components:
     OneWayCompositePmMetric:
       description: >-
         MEF 10.4 sec. 8.8.10 - One Way Composite Performance Metric consisting
-        of 7 parameters, a list of Ordered End Point Pairs (referred to as S iin
-        MEF 10.4) , a Composite Performance number (referred to as U in the MEF
-        Standards), indicators about Composite Frame Loss, Composite Frame
-        Delay, and Composite Frame Delay Variation (referred to as Wfl, Wfd, and
-        Wfdv in the MEF Standards), Thresholds for Frame Delay and Delay
-        Variation (referred to as DL and Jt in the MEF Standards) and the One
-        Way Composite Objective for this Class of Service Name and these seven
-        parameters. (Note: This Performance Metric is not defined for OVC
-        services).
+        of 7 parameters, a list of Ordered End Point Pairs (referred to as S in
+        MEF 10.4) , a Composite Performance number (referred to as U in MEF
+        10.4), indicators about Composite Frame Loss, Composite Frame Delay, and
+        Composite Frame Delay Variation (referred to as Wfl, Wfd, and Wfdv inMEF
+        10.4), Thresholds for Frame Delay and Delay Variation (referred to as DL
+        and Jt in MEF 10.4) and the One Way Composite Objective for this Class
+        of Service Name and these seven parameters. (Note: This Performance
+        Metric is not defined for OVC services).
       properties:
         oneWayIfdvThreshold:
-          $ref: '#/components/schemas/ShortDuration'
+          description: >-
+            MEF 10.4 sec. 8.8.10 - One-way Frame Delay Variation threshold in
+            time units.
+          $ref: '#/components/schemas/TimeDuration'
         cpmObjective:
+          description: >-
+            MEF 10.4 sec. 8.8.10 - The PM Objective for this Performance Metric
+            (this CoS and these 7 parameters) expressed as a percentage.
           $ref: '#/components/schemas/Percentage'
         compositeFrameDelay:
           description: >-
@@ -4733,7 +4994,10 @@ components:
           minimum: 0
           type: integer
         oneWayFdThreshold:
-          $ref: '#/components/schemas/ShortDuration'
+          description: >-
+            MEF 10.4 sec. 8.8.10 - Composite One-way Frame Delay threshold in
+            time units.
+          $ref: '#/components/schemas/TimeDuration'
         compositeFrameLoss:
           description: >-
             MEF 10.4 sec. 8.8.10 - Composite indicator for One-way Frame Loss
@@ -4744,8 +5008,8 @@ components:
         orderedPairList:
           description: >-
             MEF 10.4 sec.  8.8.1.1 - The set (referred to as S in MEF 10.4) of
-            ordered pairs of EVC or OVC End Points over which this Performance
-            Metric parameters and objective apply.
+            ordered pairs of EVC End Points over which this Performance Metric
+            parameters and objective apply.
           items:
             $ref: '#/components/schemas/OrderedPair'
           minItems: 1
@@ -4764,7 +5028,7 @@ components:
         MEF 10.4 sec. 8.8.9 and MEF 26.2 sec. 12.13.9 - One Way Frame Delay
         Range Performance Metric consisting of 2 parameters, a list of Ordered
         End Point Pairs (referred to as S in MEF 10.4 and MEF 26.2) , a number
-        (referred to as p in the MEF Standards), and the One Way Consecutive
+        (referred to as p in MEF 10.4 and MEF 26.2), and the One Way Consecutive
         High Loss Intervals Objective for this Class of Service Name and these
         two parameters.
       properties:
@@ -4796,13 +5060,20 @@ components:
       description: >-
         MEF 10.4 sec. 8.8.2 and MEF 26.2 sec. 12.13.2 - One Way Frame Delay
         Performance Metric consisting of 2 parameters, a list of Ordered End
-        Point Pairs (referred to as S in the MEF Standards) , a percentile
-        (referred to as Pd in the MEF 10.4 and MEF 26.2), and the One Way Frame
+        Point Pairs (referred to as S in MEF 10.4 and MEF 26.2) , a percentile
+        (referred to as Pd in  MEF 10.4 and MEF 26.2), and the One Way Frame
         Delay Objective for this Class of Service Name and these two parameters.
       properties:
         oneWayFdObjective:
-          $ref: '#/components/schemas/ShortDuration'
+          description: >-
+            MEF 10.4 sec. 8.8.2 and MEF 26.2 sec. 12.13.2 - The Performance
+            Objective for this Performance Metric (this CoS and these 2
+            parameters). This is a unit of time greater than 0.
+          $ref: '#/components/schemas/TimeDuration'
         oneWayFdPercentile:
+          description: >-
+            MEF 10.4 sec. 8.8.2 and MEF 26.2 sec. 12.13.2 (Pd) - A percentage in
+            (0,100] for Frame Delay metric.
           $ref: '#/components/schemas/Percentage'
         orderedPairList:
           description: >-
@@ -4821,14 +5092,21 @@ components:
         MEF 10.4 sec. 8.8.4 and MEF 26.2 sec. 12.13.4 - One Way Frame Delay
         Range Performance Metric consisting of 2 parameters, a list of Ordered
         End Point Pairs (referred to as S in MEF 10.4 and MEF 26.2) , a
-        percentile (referred to as Pr in the MEF Standards), and the One Way
+        percentile (referred to as Pr in MEF 10.4 and MEF 26.2), and the One Way
         Frame Delay Range Objective for this Class of Service Name and these two
         parameters.
       properties:
         oneWayFdrPercentile:
+          description: >-
+            MEF 10.4 sec. 8.8.4 and MEF 26.2 sec.12.13.4 - A percentage in
+            (0,100] for Frame Delay Range metric.
           $ref: '#/components/schemas/Percentage'
         oneWayFdrObjective:
-          $ref: '#/components/schemas/ShortDuration'
+          description: >-
+            MEF 10.4 sec. 8.8.4 and MEF 26.2 sec.12.13.4 - The Performance
+            Objective for this Performance Metric (this CoS and these 2
+            parameters). This is a unit of time >0.
+          $ref: '#/components/schemas/TimeDuration'
         orderedPairList:
           description: >-
             MEF 10.4 sec.  8.8.1.1 and MEF 26.2 sec. 12.13.1.1 - The set
@@ -4850,6 +5128,10 @@ components:
         Ordered End Point Pairs.
       properties:
         oneWayFlrObjective:
+          description: >-
+            MEF 10.4 sec. 8.8.6 and MEF 26.2 sec.12.13.6 - The Performance
+            Objective for this Performance Metric (this CoS and these Ordered
+            End Point Pairs).
           $ref: '#/components/schemas/Percentage'
         orderedPairList:
           description: >-
@@ -4895,17 +5177,28 @@ components:
         MEF 10.4 sec. 8.8.5 and MEF 26.2 sec. 12.13.5 - One Way Frame Inter
         Frame Delay Variation Performance Metric consisting of 3 parameters, a
         list of Ordered End Point Pairs (referred to as S in MEF 10.4 and MEF
-        26.2) , a time duration (referred to as ?t (the greek letter tau, not t)
-        in the MEF Standards), a percentile (referred to as Pv in the MEF
-        Standards), and the Inter Frame Delay Variation Objective for this Class
-        of Service Name and these three parameters.
+        26.2) , a time duration (referred to as delta-tau in MEF 10.4 and MEF
+        26.2), a percentile (referred to as Pv in MEF 10.4 and MEF 26.2), and
+        the Inter Frame Delay Variation Objective for this Class of Service Name
+        and these three parameters.
       properties:
         oneWayIfdvObjective:
-          $ref: '#/components/schemas/ShortDuration'
+          description: >-
+            MEF 10.4 sec. 8.8.5 and MEF 26.2 sec.12.13.5 - The Performance
+            Objective for this Performance Metric (this CoS and these 3
+            parameters). This is a unit of time >0.
+          $ref: '#/components/schemas/TimeDuration'
         oneWayIfdvPencentile:
+          description: >-
+            MEF 10.4 sec. 8.8.5 and MEF 26.2 sec.12.13.5 - A percentage in
+            (0,100] for Frame Delay metric.
           $ref: '#/components/schemas/Percentage'
         timeDuration:
-          $ref: '#/components/schemas/ShortDuration'
+          description: >-
+            MEF 10.4 sec. 8.8.5 and MEF 26.2 sec.12.13.5 - A time duration. This
+            is the time difference between frames for which IFDV is measured. It
+            is called delta-tau in MEF 10.4 and MEF 26.2.
+          $ref: '#/components/schemas/TimeDuration'
         orderedPairList:
           description: >-
             MEF 10.4 sec.  8.8.1.1 and MEF 26.2 sec. 12.13.1.1 - The set
@@ -4927,7 +5220,11 @@ components:
         Ordered End Point Pairs.
       properties:
         oneWayMfdObjective:
-          $ref: '#/components/schemas/ShortDuration'
+          description: >-
+            MEF 10.4 sec. 8.8.3 and MEF 26.2 sec. 12.13.3 - The Performance
+            Objective for this Performance Metric (this CoS and these Ordered
+            End Point Pairs). This is a unit of time >0.
+          $ref: '#/components/schemas/TimeDuration'
         orderedPairList:
           description: >-
             MEF 10.4 sec.  8.8.1.1 and MEF 26.2 sec. 12.13.1.1 - The set
@@ -4965,12 +5262,12 @@ components:
       properties:
         toCarrierEthernetServiceEndPoint:
           description: >-
-            This is the EVC End Point ID for and EVC End Point in the service or
+            This is the EVC End Point ID for an EVC End Point in the service or
             OVC End Point ID for an OVC End Point in the service.
           type: string
         fromCarrierEthernetServiceEndPoint:
           description: >-
-            This is the EVC End Point ID for and EVC End Point in the service or
+            This is the EVC End Point ID for an EVC End Point in the service or
             OVC End Point ID for an OVC End Point in the service.
           type: string
       type: object
@@ -5144,6 +5441,8 @@ components:
           $ref: '#/components/schemas/Money'
         dutyFreeAmount:
           $ref: '#/components/schemas/Money'
+      required:
+        - dutyFreeAmount
       type: object
     ProductOfferingQualificationItemRef:
       description: >-
@@ -5216,19 +5515,16 @@ components:
               description: >-
                 An optional free-form text field for the Seller to provide
                 additional information regarding the reason for the
-                cancellation.
+                cancellation. If the Seller cancels the Product Order, the
+                Seller provides the reason. If the Buyer requests the
+                cancellation, the Seller copies the reason provided by the Buyer
+                from the Cancel Product Order request.
               type: string
             completionDate:
               description: >-
                 Identifies the date that all Product Order Items within the
                 Order have reached a terminal state. No further action is
                 permitted on the Product Order.
-              format: date-time
-              type: string
-            expectedCompletionDate:
-              description: >
-                Identifies the date the Seller expects to complete the Product
-                Order.
               format: date-time
               type: string
             stateChange:
@@ -5243,9 +5539,6 @@ components:
               description: >-
                 Unique identifier for the Product Order that is generated by the
                 Seller when the Product Order is initially accepted via an API.
-              type: string
-            orderVersion:
-              description: 'The version of the Product Order, set by the Seller'
               type: string
             state:
               $ref: '#/components/schemas/MEFProductOrderStateType'
@@ -5295,9 +5588,18 @@ components:
                 $ref: '#/components/schemas/TerminationError'
               type: array
             charge:
-              description: The Charges associated to this Product Order Item
+              description: >-
+                The Charges associated to this Product Order Item. This list
+                contains all completed Charges containing accepted Charge Items
               items:
                 $ref: '#/components/schemas/MEFProductOrderChargeRef'
+              type: array
+            milestone:
+              description: >-
+                Milestones associated to the Product Order Item. Set by the
+                Seller when a Milestone occurs.
+              items:
+                $ref: '#/components/schemas/MEFMilestone'
               type: array
             completionDate:
               description: >-
@@ -5368,10 +5670,6 @@ components:
             to the Buyer. A projectId can be used to relate multiple Product
             Orders together.
           type: string
-        requestedCompletionDate:
-          description: This is requested date to get this Product Order completed
-          format: date-time
-          type: string
       required:
         - relatedContactInformation
       type: object
@@ -5416,9 +5714,6 @@ components:
             Unique identifier for the order that is generated by the Seller when
             the order is initially accepted via an API.
           type: string
-        orderVersion:
-          description: 'The version of the Product Order, assigned by the Seller'
-          type: string
         state:
           $ref: '#/components/schemas/MEFProductOrderStateType'
         orderDate:
@@ -5437,14 +5732,9 @@ components:
             when the Order is moved to the cancelled state.
           format: date-time
           type: string
-        requestedCompletionDate:
-          description: This is requested date to get this Product Order completed
-          format: date-time
-          type: string
       required:
         - id
         - orderDate
-        - orderVersion
         - state
       type: object
     ProductOrder_Update:
@@ -5462,22 +5752,14 @@ components:
         relatedContactInformation:
           description: >
             Contact information of an individual or organization playing a role
-            in this context. The Buyer is allowed to update the Product Order
-            Contact: role=productOrderContact;
+            in this context. Buyer can modify, add, or delete only Buyer-related
+            contacts.
           items:
             $ref: '#/components/schemas/RelatedContactInformation'
           minItems: 1
           type: array
         externalId:
           description: An identifier for this Product Order within the Buyer's enterprise.
-          type: string
-        orderVersion:
-          description: >-
-            The version of the Product Order. The `orderVersion` attribute
-            cannot be updated. It is used only to identify the version of the
-            Product Order that the Buyer wants to update. If there is a mismatch
-            with the Seller's system, the Seller will reject the request with an
-            error response.
           type: string
         productOrderItem:
           description: |
@@ -5491,8 +5773,6 @@ components:
             to the Buyer. A projectId can be used to relate multiple Product
             Orders together.
           type: string
-      required:
-        - orderVersion
       type: object
     ProductRelationship:
       description: >-
@@ -5600,33 +5880,6 @@ components:
         - '@type'
         - role
       type: object
-    ShortDuration:
-      description: >-
-        This class is used to describe durations expressed in minutes or smaller
-        time units
-      properties:
-        shortDurationValue:
-          description: >-
-            The value of the duration. For example, if the duration is 20 ms,
-            this element is 20.
-          type: integer
-        shortDurationUnits:
-          description: >-
-            The unit of measure in the duration. For example, if an interval is
-            2ms, this element is MS.
-          $ref: '#/components/schemas/ShortDurationUnits'
-      type: object
-    ShortDurationUnits:
-      description: >-
-        The unit of measure in the duration. For example, if an interval is 2ms,
-        this element is MS.
-      enum:
-        - NS
-        - US
-        - MS
-        - SEC
-        - MIN
-      type: string
     SlsCosNameEntry:
       description: >-
         This is the specification of Performance Metrics (and parameters) for
@@ -5830,26 +6083,24 @@ components:
           minimum: 1
           type: integer
         interval:
-          $ref: '#/components/schemas/ShortDuration'
+          description: >-
+            The time interval in seconds over which the source address limit is
+            evaluated
+          $ref: '#/components/schemas/TimeDuration'
       type: object
     SubscriberUniCommon:
       description: >-
-        This class contains all of the Subscriber UNI Services Attributes that
-        are used in all four Business Functions (POQ, Quote, Order, Inventory).
-        At this time, this includes all of the Subscriber UNI Service
-        Attributes. This class is used to compose the SubscriberUNI class which
-        has one file for each Business Function that differ in terms of the
-        Service Attributes that are "Required" for the Business Function (rather
-        than "Optional").
+        This class contains all of the Subscriber UNI Services Attributes.. This
+        class is used to compose the SubscriberUNI class.
       properties:
         listOfPhyLinks:
           description: >-
             MEF 10.4 sec. 9.4 - The value of the Subscriber UNI List of Physical
-            Links Service Attribute is a list of 5-tuples of the form id,
-            ?physicalLink, synchronousEthernet, precisionTiming,
-            demarcConnectorType?, with one list item for each physical link. The
-            value of id is an identifier for the physical link. The value of
-            physicalLink is the specific Ethernet physical layer type.
+            Links Service Attribute is a list of 5-tuples of the form ?id,
+            physicalLink, synchronousEthernet, precisionTiming,
+            demarcConnectorType, gender?, with one list item for each physical
+            link. The value of id is an identifier for the physical link. The
+            value of physicalLink is the specific Ethernet physical layer type.
             synchronousEthernet indicates if synchronous Ethernet is used on the
             physical link and has the value Enabled or Disabled. The value of
             precisionTiming indicates if the Precision Time Protocol is used on
@@ -5891,22 +6142,64 @@ components:
           uniqueItems: false
         maximumNumberOfEndPoints:
           description: >-
-            MEF 10.4 sec. 9.9 - The maximum number of OVC End Points that the
-            Operator CEN can support at the UNI.
+            MEF 10.4 sec. 9.9 - The maximum number of EVC End Points that can be
+            supported at the UNI
           maximum: 4094
           minimum: 1
           type: integer
         lagLinkMeg:
+          description: >-
+            MEF 10.4 sec. 9.15 - Indicates if the Service Provider has
+            instantiated a LAG Link MEG End Point (MEP) on each physical link in
+            the UNI if the UNI has more than one physical link (ENABLED) or not
+            (DISABLED).
           $ref: '#/components/schemas/EnabledDisabled'
         l2cpAddressSet:
+          description: >-
+            MEF 10.4 sec. 9.16 and MEF 45.1 sec. 8.1 - L2CP Address Set Service
+            Attribute is defined in MEF 45.1. CTA CEVLAN Tag Aware for
+            VLAN-based services where the CE-VLAN ID is used to map a frame to a
+            service. CTB CVLAN Tag Blind for Port-based services where the
+            CE-VLAN ID not used to map a frame to a service. CTB2 CVLAN Tag
+            Blind Option 2 for point-to-point Port-based services that support
+            the EPL Option 2 L2CP processing.
           $ref: '#/components/schemas/L2cpAddressSet'
         linkOAM:
+          description: >-
+            MEF 10.4 sec. 9.13 - Controls when and how Link OAM per IEEE Std
+            802.3-2015 is run on the physical links in the UNI.
           $ref: '#/components/schemas/EnabledDisabled'
         meg:
+          description: >-
+            MEF 10.4 sec. 9.14 - Indicates if the Service Provider has
+            instantiated a MEG End Point (MEP) at the UNI Maintenance Entity
+            Group (MEG) Level (ENABLED) or not (DISABLED).
           $ref: '#/components/schemas/EnabledDisabled'
         linkAggregation:
+          description: >-
+            MEF 10.4 sec. 9.5 - Data type representing Link Aggregation types.
+            NONE-No Link Aggregation is used. 2_LINK_ACTIVE_STANDBY-The SP
+            network uses Link Aggregation as in either Clause 5.6.1 of IEEE Std
+            802.1AX-2008 [2] or Clause 6.7.1 of IEEE Std 802.1AX-2014 with one
+            Link Aggregation Group(LAG) across the links supporting the UNI/ENNI
+            such that all Service Frames are carried on only one of the two
+            links when both links are operational. ALL_ACTIVE-The SP Network
+            uses Link Aggregation as specified in Clause 5.3 of IEEE Std
+            802.1AX-2014, including the use of the version 2 LACPDUs as
+            specified in Clause 5.3.1h of IEEE Std 802.1AZ-2014, with one Link
+            Aggregation Group (LAG) across the links. OTHER-The
+            Operator/Subscriber/Service Provider agree on another other
+            resiliency mechanism.
           $ref: '#/components/schemas/LinkAggType'
         l2cpPeering:
+          description: >-
+            MEF 10.4 sec. 9.17 and MEF 45.1 sec. 8.2 - L2CP Peering Service
+            Attribute defined in MEF 45.1 specifies which protocols, if any, are
+            peered at the UNI. The L2CP Peering service attribute value must be
+            an empty list, or a list of entries identifying protocols to be
+            Peered where each entry consists of {Destination Address, Protocol
+            Identifier} or {Destination Address, Protocol Identifier, Link
+            Identifier}.
           $ref: '#/components/schemas/L2cpPeering'
         maximumNumberOfCtagVlanIdsPerEndPoint:
           description: >-
@@ -5917,6 +6210,10 @@ components:
           minimum: 1
           type: integer
         tokenShare:
+          description: >-
+            MEF 10.4 sec. 9.11 - An attribute that indicates whether Bandwidth
+            Profile Envelopes containing more than one Bandwidth Profile Flow
+            are supported by the Service Provider at the Subscriber UNI.
           $ref: '#/components/schemas/EnabledDisabled'
         maximumServiceFrameSize:
           description: >-
@@ -5929,8 +6226,8 @@ components:
             MEF 10.4 sec. 9.12 - The Envelopes and Envelope Coupling Flag values
             to which Bandwidth Profile Flows can be mapped. Value is None or
             non-empty list of {envelopeID, couplingFlagForIndexZero}. If this
-            property is not present or an empty list, the value is assumed to
-            have the value None.
+            property is an empty list, the value is assumed to have the value
+            None.
           items:
             $ref: '#/components/schemas/Envelope'
           minItems: 0
@@ -5964,35 +6261,36 @@ components:
           description: Text to describe the reason of the termination.
           type: string
       type: object
-    Time:
+    TimeDuration:
       description: >-
-        This Class provides full specification for a date and time:
-        year:month:day hour:minute:sec. The time and date are UTC.
+        This class is used to describe durations expressed as a 2-tuple, (value,
+        units). The units from from nanoseconds to years.
       properties:
-        month:
-          maximum: 12
-          minimum: 1
+        timeDurationValue:
+          description: >-
+            The value of the duration. For example, if the duration is 20 ms,
+            this element is 20.
           type: integer
-        hour:
-          maximum: 23
-          minimum: 0
-          type: integer
-        year:
-          minimum: 1900
-          type: integer
-        day:
-          maximum: 31
-          minimum: 1
-          type: integer
-        minute:
-          maximum: 59
-          minimum: 0
-          type: integer
-        second:
-          maximum: 59
-          minimum: 0
-          type: integer
+        timeDurationUnits:
+          description: >-
+            The unit of measure in the duration. For example, if an interval is
+            2ms, this element is MS.
+          $ref: '#/components/schemas/TimeDurationUnits'
       type: object
+    TimeDurationUnits:
+      description: Enum listing the units of measure for a Time Duration
+      enum:
+        - NS
+        - US
+        - MS
+        - SEC
+        - MIN
+        - HOUR
+        - DAY
+        - WEEK
+        - MONTH
+        - YEAR
+      type: string
     TimeUnit:
       description: |
         Represents a unit of time.
@@ -6022,8 +6320,6 @@ components:
         - SC
         - LC
         - RJ45
-        - FC
-        - D4
         - OTHER
       type: string
     UniPhysicalLink:
@@ -6041,6 +6337,9 @@ components:
             (common) or a PLUG (less common).
           $ref: '#/components/schemas/UniConnectorGender'
         synchronousEthernet:
+          description: >-
+            Indicates if synchronous Ethernet is used on the physical link and
+            has the value either Enabled or Disabled.
           $ref: '#/components/schemas/EnabledDisabled'
         uniConnectorType:
           description: >-
@@ -6048,6 +6347,9 @@ components:
             Subscriber.
           $ref: '#/components/schemas/UniConnectorType'
         precisionTiming:
+          description: >-
+            Indicates if the Precision Time Protocol is used on the physical
+            link and has the value either Enabled or Disabled
           $ref: '#/components/schemas/EnabledDisabled'
       type: object
     VirtualFrameMap:
@@ -6071,9 +6373,9 @@ components:
       type: object
     VlanType:
       description: >-
-        An indication of the type EVC End Point Map. If the value is UT/PT then
-        no additional information is required. If the value is LIST then a list
-        of C-VLAN ID values must be specified.
+        An indication of the type of EVC End Point Map. If the value is UT/PT
+        then no additional information is required. If the value is LIST then a
+        list of C-VLAN ID values must be specified.
       enum:
         - LIST
         - UT/PT
