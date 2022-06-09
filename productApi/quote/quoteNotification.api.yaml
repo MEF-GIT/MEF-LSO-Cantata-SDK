@@ -21,9 +21,6 @@ info:
     modified by the MEF Forum and its contributors.
   title: Quote Notification
   version: 2.0.1
-  x-logo:
-    url: /redoc/logo.png
-    backgroundColor: '#FFFFFF'
 servers:
   - url: 'https://{serverBase}/mefApi/cantata/quoteNotification/v2/'
     variables:
