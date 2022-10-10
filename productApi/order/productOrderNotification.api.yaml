@@ -1,12 +1,9 @@
 openapi: 3.0.1
 info:
   description: |
-    **This file forms part of MEF W123** 
+    **This file forms part of MEF 123** 
 
-    **This specification represents MEF work in progress and is subject to
-    change.** 
-
-    This API implements Business Requirements described in MEF W57.2
+    This API implements Business Requirements described in MEF 57.2
 
     Product Order Management allows the Buyer to request the Seller to initiate and complete the
     fulfillment process of an installation of a Product Offering, an update to
@@ -23,9 +20,9 @@ info:
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the MEF Forum and its contributors.
   title: Product Ordering Notification
-  version: 4.0.0-RC
+  version: 5.0.0
 servers:
-  - url: 'https://{serverBase}/mefApi/cantata/productOrderingNotification/v4/'
+  - url: 'https://{serverBase}/mefApi/cantata/productOrderingNotification/v5/'
     variables:
       serverBase:
         default: mef.net
