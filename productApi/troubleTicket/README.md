@@ -1,5 +1,40 @@
 # Trouble Ticket Management: Release notes
 
+## Release Ella:
+
+**Readiness status**: Requested Letter Ballot. It will be most likely published as a standard without further changes.
+
+**Summary** 
+
+- added `observedImpact` to Trouble Ticket search criteria
+- introduced `impact` attribute to Incident, aligned with Trouble Ticket's `observedImpact`
+
+### List of changes in the API:
+
+**troubleTicketManagement.yaml:**
+
+- `TroubleTicket_Update`
+  - `observedImpact` - added
+- `/incident/`
+  - `get`
+    - `impact` query parameter added
+- `Incident`
+  - `impact` - added, required
+- `Incident_Find`
+  - `impact` - added, required
+- `IncidentType`
+  - removed from enumeration (used by `impact` attribute):
+    - `degraded`
+    - `down`
+    - `intermittent`
+  - added:
+    - `repair`
+    - `installation`
+
+**troubleTicketNotification.yaml:**
+
+None
+
 ## Release Dolly:
 
 **Readiness status**: Work in progress and is subject to change. Completed and
@@ -37,7 +72,7 @@ The "Get Workorder" use case moved to Appointment API - `workOrderManagement.yam
 
 **troubleTicketNotification.api.yaml:**
 
-- server URL: `mefApi/sonata/troubleTicket/` changed to `mefApi/sonata/troubleTicketNotification/`
+- server URL: `mefApi/cantata/troubleTicket/` changed to `mefApi/cantata/troubleTicketNotification/`
 - removed endpoint:  `/listener/incidentClosedEvent`
 - renamed endpoint: ` /listener/incidentCreatedEvent:` to ` /listener/incidentCreateEvent:`
 - `IncidentEventType`:
