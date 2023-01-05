@@ -8,6 +8,7 @@
 
 - added `observedImpact` to Trouble Ticket search criteria
 - introduced `impact` attribute to Incident, aligned with Trouble Ticket's `observedImpact`
+- added `/hub/{id}/get` operation
 
 ### List of changes in the API:
 
@@ -18,6 +19,8 @@
 - `/incident/`
   - `get`
     - `impact` query parameter added
+- `/hub/{id}`
+  - `get` - operation added
 - `Incident`
   - `impact` - added, required
 - `Incident_Find`
@@ -72,7 +75,7 @@ The "Get Workorder" use case moved to Appointment API - `workOrderManagement.yam
 
 **troubleTicketNotification.api.yaml:**
 
-- server URL: `mefApi/cantata/troubleTicket/` changed to `mefApi/cantata/troubleTicketNotification/`
+- server URL: `mefApi/sonata/troubleTicket/` changed to `mefApi/sonata/troubleTicketNotification/`
 - removed endpoint:  `/listener/incidentClosedEvent`
 - renamed endpoint: ` /listener/incidentCreatedEvent:` to ` /listener/incidentCreateEvent:`
 - `IncidentEventType`:
