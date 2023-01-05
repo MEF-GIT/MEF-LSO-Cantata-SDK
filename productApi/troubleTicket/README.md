@@ -75,7 +75,7 @@ The "Get Workorder" use case moved to Appointment API - `workOrderManagement.yam
 
 **troubleTicketNotification.api.yaml:**
 
-- server URL: `mefApi/sonata/troubleTicket/` changed to `mefApi/sonata/troubleTicketNotification/`
+- server URL: `mefApi/cantata/troubleTicket/` changed to `mefApi/cantata/troubleTicketNotification/`
 - removed endpoint:  `/listener/incidentClosedEvent`
 - renamed endpoint: ` /listener/incidentCreatedEvent:` to ` /listener/incidentCreateEvent:`
 - `IncidentEventType`:

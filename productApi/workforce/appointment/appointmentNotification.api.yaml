@@ -24,7 +24,7 @@ info:
   title: Appointment Management Notification
   version: 2.0.0
 servers:
-  - url: 'https://{serverBase}/mefApi/sonata/appointmentNotification/v2/'
+  - url: 'https://{serverBase}/mefApi/cantata/appointmentNotification/v2/'
     variables:
       serverBase:
         default: mef.net
