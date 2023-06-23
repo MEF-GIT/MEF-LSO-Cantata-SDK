@@ -1,5 +1,11 @@
 # Appointment Management: Release notes
 
+## Release Fergie:
+
+**Readiness status**: MEF Published Standard
+
+No changes.
+
 ## Release Ella:
 
 **Readiness status**: Requested Letter Ballot. It will be most likely published
@@ -14,8 +20,8 @@ as a standard without further changes.
 
 **appointmentManagement.api.yaml:**
 
-- server URL : `https://{serverBase} mefApi/cantata/appointment/v1/` changed to
-  `https://{serverBase}/mefApi/cantata/appointment/v2/`
+- server URL : `https://{serverBase} mefApi/sonata/appointment/v1/` changed to
+  `https://{serverBase}/mefApi/sonata/appointment/v2/`
 - added operation
   - `/hub/{id}`
     - `get`
@@ -70,8 +76,8 @@ as a standard without further changes.
 
 **appointmentNotification.api.yaml:**
 
-- server URL : `https://{serverBase}/mefApi/cantata/appointmentNotification/v1/`
-  changed to `https://{serverBase}/mefApi/cantata/appointmentNotification/v2/`
+- server URL : `https://{serverBase}/mefApi/sonata/appointmentNotification/v1/`
+  changed to `https://{serverBase}/mefApi/sonata/appointmentNotification/v2/`
 
 ## Release Dolly:
 

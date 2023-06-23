@@ -1,5 +1,11 @@
 # Trouble Ticket Management: Release notes
 
+## Release Fergie:
+
+**Readiness status**: MEF Published Standard
+
+No changes.
+
 ## Release Ella:
 
 **Readiness status**: Requested Letter Ballot. It will be most likely published as a standard without further changes.
@@ -75,7 +81,7 @@ The "Get Workorder" use case moved to Appointment API - `workOrderManagement.yam
 
 **troubleTicketNotification.api.yaml:**
 
-- server URL: `mefApi/cantata/troubleTicket/` changed to `mefApi/cantata/troubleTicketNotification/`
+- server URL: `mefApi/sonata/troubleTicket/` changed to `mefApi/sonata/troubleTicketNotification/`
 - removed endpoint:  `/listener/incidentClosedEvent`
 - renamed endpoint: ` /listener/incidentCreatedEvent:` to ` /listener/incidentCreateEvent:`
 - `IncidentEventType`:

@@ -1,5 +1,11 @@
 # Product Order Management: Release notes
 
+## Release Fergie:
+
+**Readiness status**: MEF Published Standard
+
+No changes.
+
 ## Release Ella:
 
 **Readiness status**: Requested Letter Ballot. It will be most likely published
@@ -102,8 +108,8 @@ resolved Call for Comments #2
 
 **productOrderNotification.api.yaml:**
 
-- server URL `/mefApi/cantata/productOrderingManagement/` changed to
-  `/mefApi/cantata/productOrderingNotification/`
+- server URL `/mefApi/sonata/productOrderingManagement/` changed to
+  `/mefApi/sonata/productOrderingNotification/`
 
 ## Release Celine:
 
