@@ -1,14 +1,14 @@
-# MEF-LSO-Cantata-SDK - Grace Release
+# MEF-LSO-Cantata-SDK - Haley Release
 
 ## Download Link
 
 Download the entire repository by clicking
-[here](https://github.com/MEF-GIT/MEF-LSO-Cantata-SDK/releases/download/grace/MEF-LSO-Cantata-SDK-grace.zip)
+[here](https://github.com/MEF-GIT/MEF-LSO-Cantata-SDK/releases/download/haley/MEF-LSO-Cantata-SDK-haley.zip)
 
 ## Introduction
 
-This repository contains the MEF LSO Cantata SDK. It includes API definitions
-for the following functional areas:
+This repository contains the MEF LSO Cantata SDK. It includes API definitions for
+the following functional areas:
 
 - Product Catalog
 - Serviceability
@@ -36,32 +36,19 @@ No new APIs were introduced.
 There are the following document maturity changes:
 
 - Documents published as MEF Standards:
-  - MEF 123 - LSO Cantata and LSO Sonata Product Order Management API -
-    Developer Guide
-  - MEF 124 - LSO Cantata and LSO Sonata Trouble Ticket and Incident Management
-    API - Developer Guide
-  - MEF 137 - LSO Cantata and LSO Sonata Appointment Management API - Developer
-    Guide
-  - MEF 134 - Billing and Invoice Business Requirements and Use Cases
-- The following documents have their Letter Ballots open and will be likely
-  shortly published as MEF standards:
-  - MEF W125.0.1 - Subscriber Ethernet Schemas and Product Schema Guide -
+  - MEF 125.0.1 - Subscriber Ethernet Schemas and Product Schema Guide -
     Amendment (examples)
-  - MEF W139 - Internet Access Product Schemas and Developer Guide
-  - MEF W141 - LSO Cantata and LSO Sonata Billing Management API - Developer
-    Guide
-- Updated documents:
-  - MEF W127 - LSO Cantata and LSO Sonata Product Catalog - Business
+  - MEF 139 - Internet Access Product Schemas and Developer Guide
+  - MEF 127 - LSO Cantata and LSO Sonata Product Catalog - Business
     Requirements and Use Cases
-  - MEF W142 - LSO Cantata and LSO Sonata Product Catalog API & Developer Guide
+  - MEF 128.1 - LSO API Security Profile
+- The following documents have their Letter Ballots open and will be likely shortly
+  published as MEF standards:
   - MEF W110 - Product Offering Availability and Pricing Discovery - Business
     Requirements and Use Cases
+- Updated documents:
   - MEF W160 - LSO Cantata and LSO Sonata Product Offering Availability and
     Pricing Discovery API - Developer Guide
-  - MEF W128.1 - LSO API Security Profile
-- New documents:
-  - MEF 55.1.1 Amendment to MEF 55.1: Reference Architecture and Framework -
-    Terminology
 
 The [LSO Marketplace](http://lso.mef.net) offers the possibility to blend the
 desired APIs with chosen Products. Thus the APIs blended with all products that
@@ -80,14 +67,14 @@ invite wider industry review.
 
 The maturity per functionality is presented as follows:
 
-(\*) is used to mark an item that changes their maturity compared to previous
+(\*) is used to mark an item that changes its maturity compared to the previous
 release.
 
 - Product Catalog:
   - Business Requirements:
-    - \*MEF W127 - **Draft Standard R2**
+    - \*MEF 127 - **Published Standard**
   - Developer Guide/API:
-    - \*MEF W142 - **work in progress - ready for CfC#2**
+    - MEF W142 - **work in progress - CfC#2 resolved**
 - Address Validation, Site Query:
   - Business Requirements:
     - MEF 79 - **Published Standard**
@@ -108,9 +95,9 @@ release.
     - MEF 115: - **Published Standard**
 - Product Offering Availability and Pricing Discovery:
   - Business Requirements:
-    - MEF \*W110 - **Draft Standard R2**
+    - MEF \*W110 - **Draft Standard R4**
   - Developer Guide/API:
-    - MEF \*W160: - **work in progress - ready for CfC#2**
+    - MEF \*W160: - **work in progress - ready for CfC#3**
 - Order:
   - Business Requirements:
     - MEF 57.2 - **Published Standard**
@@ -133,20 +120,19 @@ release.
   - Developer Guide/API
     - MEF 141 - **Published Standard**
 - Product Specifications:
+  - MEF 106 - Access E-Line - **Published Standard**
   - MEF 125 - Subscriber Ethernet (EPL, EPLAN, EPTREE, EVPL, EVPLAN, EVPTREE) -
     **Published Standard**
-  - \*MEF 125.0.1 - Amendment to Subscriber Ethernet - **Published Standard**
-  - \*MEF W139 - Basic and Advanced Internet Access - **Letter Ballot**
+  - MEF 125.0.1 - Amendment to Subscriber Ethernet - **Published Standard**
+  - MEF 139 - Basic and Advanced Internet Access - **Published Standard**
 - Security:
-  - MEF 128 - **Published Standard**
-  - \*MEF W128.1 - **work in progress - Letter Ballot ready**
+  - MEF 128.1 - **Published Standard**
 
 For high-level information about the release compatibility and roadmap please
 visit: [LSO Marketplace](https://lso.mef.net/lso-api-sdk-releases)
 
 For details on the maturity map and the roadmap for future releases please refer
-to
-[LSO Cantata SDK Home Page](https://wiki.mef.net/display/CESG/LSO+Cantata+SDK)
+to [LSO Cantata SDK Home Page](https://wiki.mef.net/display/CESG/LSO+Cantata+SDK)
 on the MEF WIKI.
 
 ## Contents
@@ -158,8 +144,8 @@ This SDK contains the following items:
 - `README` - This file
 - `productApi` - Definitions of the APIs - yaml files with schemas
 - `documentation` - All related standards and Developer Guides
-  - `productApi` - API related documentation - API Developer Guides
-  - `productSchema` - Product related documentation - Product schema guides
+  - `productApi` - API-related documentation - API Developer Guides
+  - `productSchema` - Product-related documentation - Product schema guides
   - `supportingStandards` - The rest of the documents and standards.
 - `ProductSchema` - Product Specification schemas
 - `generated`
@@ -183,7 +169,7 @@ The MEF LSO Cantata SDK is released under the Apache 2.0 license.
 
 ## Copyright
 
-© MEF Forum 2023. All Rights Reserved.
+© MEF Forum 2024. All Rights Reserved.
 
 ## Disclaimer
 
