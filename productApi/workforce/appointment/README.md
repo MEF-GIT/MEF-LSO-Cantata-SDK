@@ -1,5 +1,23 @@
 # Appointment Management: Release notes
 
+## Release Janis:
+
+**Readiness status**: Requested Letter Ballot. It will be most likely published as a standard in this form.
+
+**Summary**:
+
+- Common schemas consistency applied.
+
+**appointmentManagement.api.yaml:**
+
+- `MEFByteSize`:
+  - `amount` - marked as required, removed `default: 1`
+  - `units` - marked as required
+
+**appointmentNotification.api.yaml:**
+
+No changes
+
 ## Release Irene:
 
 **Readiness status**: Call for Comments Ballot #1. Work in progress and is
@@ -129,8 +147,8 @@ as a standard without further changes.
 
 **appointmentManagement.api.yaml:**
 
-- server URL : `https://{serverBase} mefApi/cantata/appointment/v1/` changed to
-  `https://{serverBase}/mefApi/cantata/appointment/v2/`
+- server URL : `https://{serverBase} mefApi/sonata/appointment/v1/` changed to
+  `https://{serverBase}/mefApi/sonata/appointment/v2/`
 - added operation
   - `/hub/{id}`
     - `get`
@@ -185,8 +203,8 @@ as a standard without further changes.
 
 **appointmentNotification.api.yaml:**
 
-- server URL : `https://{serverBase}/mefApi/cantata/appointmentNotification/v1/`
-  changed to `https://{serverBase}/mefApi/cantata/appointmentNotification/v2/`
+- server URL : `https://{serverBase}/mefApi/sonata/appointmentNotification/v1/`
+  changed to `https://{serverBase}/mefApi/sonata/appointmentNotification/v2/`
 
 ## Release Dolly:
 

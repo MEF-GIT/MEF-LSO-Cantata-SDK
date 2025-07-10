@@ -1,5 +1,21 @@
 # Workorder Management: Release notes
 
+## Release Janis:
+
+**Readiness status**: Requested Letter Ballot. It will be most likely published as a standard in this form.
+
+**Summary**:
+
+No changes
+
+**appointmentManagement.api.yaml:**
+
+No changes
+
+**appointmentNotification.api.yaml:**
+
+No changes
+
 ## Release Irene:
 
 **Readiness status**: Call for Comments Ballot #1. Work in progress and is
@@ -128,8 +144,8 @@ as a standard without further changes.
 
 **workorderManagement.api.yaml:**
 
-- server URL : `https://{serverBase}/mefApi/cantata/WorkOrder/v2/` changed to
-  `https://{serverBase}/mefApi/cantata/workOrderManagement/v2/`
+- server URL : `https://{serverBase}/mefApi/sonata/WorkOrder/v2/` changed to
+  `https://{serverBase}/mefApi/sonata/workOrderManagement/v2/`
 - added operation
   - `/hub/{id}`
     - `get`
@@ -172,8 +188,8 @@ as a standard without further changes.
 
 **workorderNotification.api.yaml:**
 
-- server URL : `https://{serverBase}/mefApi/cantata/workOrderNotification/v1/`
-  changed to `https://{serverBase}/mefApi/cantata/workOrderNotification/v2/`
+- server URL : `https://{serverBase}/mefApi/sonata/workOrderNotification/v1/`
+  changed to `https://{serverBase}/mefApi/sonata/workOrderNotification/v2/`
 
 ## Release Dolly:
 
