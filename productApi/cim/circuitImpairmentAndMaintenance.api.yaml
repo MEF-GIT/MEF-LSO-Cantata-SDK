@@ -2,10 +2,10 @@ openapi: 3.0.1
 info:
   title: Circuit Impairment and Maintenance
   description: >
-    **This file forms part of Mplify W175**
+    **This file forms part of Mplify 175**
 
 
-    This API implements Business Requirements described in Mplify 113 and  173
+    This API implements Business Requirements described in MEF 113 and Mplify 173
 
 
     It allows the Buyer to retrieve CIM Incident as well as register for event
@@ -41,7 +41,7 @@ info:
     Such content has been modified by the Mplify Alliance and its contributors.
   version: 1.0.0
 servers:
-  - url: 'https://{serverBase}/mefApi/cantata/cimIncident/v1/'
+  - url: "https://{serverBase}/mefApi/cantata/cimIncident/v1/"
     variables:
       serverBase:
         description: The base of Seller's URL.
@@ -69,7 +69,7 @@ paths:
             evaluation by the Seller of the impact of the CIM Incident.
           required: false
           schema:
-            $ref: '#/components/schemas/CimIncidentPriorityType'
+            $ref: "#/components/schemas/CimIncidentPriorityType"
         - name: severity
           in: query
           description: >-
@@ -77,26 +77,25 @@ paths:
             the Seller.
           required: false
           schema:
-            $ref: '#/components/schemas/CimIncidentSeverityType'
+            $ref: "#/components/schemas/CimIncidentSeverityType"
         - name: impact
           in: query
           description: The type of impact observed by the Buyer.
           required: false
           schema:
-            $ref: '#/components/schemas/MEFObservedImpactType'
+            $ref: "#/components/schemas/MEFObservedImpactType"
         - name: incidentType
           in: query
-          description:
-            The presumed cause of the CIM Incident as evaluated by the Seller.
+          description: The presumed cause of the CIM Incident as evaluated by the Seller.
           required: false
           schema:
-            $ref: '#/components/schemas/CimIncidentType'
+            $ref: "#/components/schemas/CimIncidentType"
         - name: status
           in: query
           description: The current status of the CIM Incident
           required: false
           schema:
-            $ref: '#/components/schemas/IncidentStatusType'
+            $ref: "#/components/schemas/IncidentStatusType"
         - name: relatedEntityId
           in: query
           description: >-
@@ -116,8 +115,7 @@ paths:
             default: Product
         - name: creationDate.gt
           in: query
-          description:
-            The date on which the CIM Incident was created - greater than
+          description: The date on which the CIM Incident was created - greater than
           required: false
           schema:
             type: string
@@ -203,8 +201,7 @@ paths:
             type: string
         - name: offset
           in: query
-          description:
-            Requested index for start of resources to be provided in response
+          description: Requested index for start of resources to be provided in response
           required: false
           schema:
             type: integer
@@ -216,8 +213,8 @@ paths:
             type: integer
             format: int32
       responses:
-        '200':
-          description: 'OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'
+        "200":
+          description: "OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)"
           headers:
             X-Pagination-Throttled:
               description: >
@@ -242,40 +239,40 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CimIncident'
-        '400':
+                  $ref: "#/components/schemas/CimIncident"
+        "400":
           description: Bad Request
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error400'
-        '401':
+                $ref: "#/components/schemas/Error400"
+        "401":
           description: Unauthorized
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error401'
-        '403':
+                $ref: "#/components/schemas/Error401"
+        "403":
           description: Forbidden
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error403'
-        '422':
+                $ref: "#/components/schemas/Error403"
+        "422":
           description: Unprocessable entity due to business validation problems
           content:
             application/json;charset=utf-8:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Error422'
-        '500':
+                  $ref: "#/components/schemas/Error422"
+        "500":
           description: Internal Server Error
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error500'
-  '/cimIncident/{id}':
+                $ref: "#/components/schemas/Error500"
+  "/cimIncident/{id}":
     get:
       tags:
         - CIM Incident
@@ -310,58 +307,56 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: 'OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'
+        "200":
+          description: "OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)"
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/CimIncident'
-        '400':
+                $ref: "#/components/schemas/CimIncident"
+        "400":
           description: Bad Request
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error400'
-        '401':
+                $ref: "#/components/schemas/Error400"
+        "401":
           description: Unauthorized
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error401'
-        '403':
+                $ref: "#/components/schemas/Error401"
+        "403":
           description: Forbidden
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error403'
-        '404':
+                $ref: "#/components/schemas/Error403"
+        "404":
           description: Not Found
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error404'
-        '500':
+                $ref: "#/components/schemas/Error404"
+        "500":
           description: Internal Server Error
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error500'
-        '501':
+                $ref: "#/components/schemas/Error500"
+        "501":
           description: >-
             Method not implemented. Used in case Seller is not supporting
             Notification mechanism
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error501'
+                $ref: "#/components/schemas/Error501"
   /hub:
     post:
       tags:
         - events subscription
-      summary:
-        Allows the Buyer to register to CIM Incident status change notifications
-      description:
-        The Buyer requests to subscribe to CIM Incident Notifications.
+      summary: Allows the Buyer to register to CIM Incident status change notifications
+      description: The Buyer requests to subscribe to CIM Incident Notifications.
       operationId: registerListener
       parameters:
         - name: buyerId
@@ -383,63 +378,60 @@ paths:
           schema:
             type: string
       requestBody:
-        description:
-          Data containing the callback endpoint to deliver the information
+        description: Data containing the callback endpoint to deliver the information
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/EventSubscriptionInput'
+              $ref: "#/components/schemas/EventSubscriptionInput"
         required: true
       responses:
-        '201':
-          description:
-            'Subscribed  (https://tools.ietf.org/html/rfc7231#section-6.3.2)'
+        "201":
+          description: "Subscribed  (https://tools.ietf.org/html/rfc7231#section-6.3.2)"
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/EventSubscription'
-        '400':
+                $ref: "#/components/schemas/EventSubscription"
+        "400":
           description: Bad Request
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error400'
-        '401':
+                $ref: "#/components/schemas/Error400"
+        "401":
           description: Unauthorized
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error401'
-        '403':
+                $ref: "#/components/schemas/Error401"
+        "403":
           description: Forbidden
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error403'
-        '422':
-          description:
-            Unprocessable entity due to the business validation problems
+                $ref: "#/components/schemas/Error403"
+        "422":
+          description: Unprocessable entity due to the business validation problems
           content:
             application/json;charset=utf-8:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Error422'
-        '500':
+                  $ref: "#/components/schemas/Error422"
+        "500":
           description: Internal Server Error
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error500'
-        '501':
+                $ref: "#/components/schemas/Error500"
+        "501":
           description: >-
             Method not implemented. Used in case Seller is not supporting
             Notification mechanism
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error501'
-  '/hub/{id}':
+                $ref: "#/components/schemas/Error501"
+  "/hub/{id}":
     get:
       tags:
         - events subscription
@@ -472,54 +464,53 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Success
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/EventSubscription'
-        '400':
+                $ref: "#/components/schemas/EventSubscription"
+        "400":
           description: Bad Request
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error400'
-        '401':
+                $ref: "#/components/schemas/Error400"
+        "401":
           description: Unauthorized
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error401'
-        '403':
+                $ref: "#/components/schemas/Error401"
+        "403":
           description: Forbidden
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error403'
-        '404':
+                $ref: "#/components/schemas/Error403"
+        "404":
           description: Not Found
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error404'
-        '500':
+                $ref: "#/components/schemas/Error404"
+        "500":
           description: Internal Server Error
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error500'
-        '501':
+                $ref: "#/components/schemas/Error500"
+        "501":
           description: Method not implemented.
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error501'
+                $ref: "#/components/schemas/Error501"
     delete:
       tags:
         - events subscription
       summary: Unregister a listener
-      description:
-        The Buyer requests to unsubscribe from CIM Incident Notifications
+      description: The Buyer requests to unsubscribe from CIM Incident Notifications
       operationId: unregisterListener
       parameters:
         - name: id
@@ -547,47 +538,46 @@ paths:
           schema:
             type: string
       responses:
-        '204':
-          description:
-            'Deleted (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
-        '400':
+        "204":
+          description: "Deleted (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
           description: Bad request
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error400'
-        '401':
+                $ref: "#/components/schemas/Error400"
+        "401":
           description: Unauthorized
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error401'
-        '403':
+                $ref: "#/components/schemas/Error401"
+        "403":
           description: Forbidden
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error403'
-        '404':
+                $ref: "#/components/schemas/Error403"
+        "404":
           description: Not Found
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error404'
-        '500':
+                $ref: "#/components/schemas/Error404"
+        "500":
           description: Internal Server Error
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error500'
-        '501':
+                $ref: "#/components/schemas/Error500"
+        "501":
           description: >-
             Method not implemented. Used in case Seller is not supporting
             Notification mechanism
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error501'
+                $ref: "#/components/schemas/Error501"
 components:
   schemas:
     AttachmentValue:
@@ -597,8 +587,7 @@ components:
       type: object
       properties:
         author:
-          description:
-            The name of the person or organization who added the Attachment.
+          description: The name of the person or organization who added the Attachment.
           type: string
         creationDate:
           description: The date the Attachment was added.
@@ -617,11 +606,10 @@ components:
           type: string
         size:
           description: The size of the attachment.
-          $ref: '#/components/schemas/MEFByteSize'
+          $ref: "#/components/schemas/MEFByteSize"
         source:
-          description:
-            Indicates if the attachment was added by the Buyer or the Seller.
-          $ref: '#/components/schemas/MEFBuyerSellerType'
+          description: Indicates if the attachment was added by the Buyer or the Seller.
+          $ref: "#/components/schemas/MEFBuyerSellerType"
         url:
           description: URL where the attachment is located.
           type: string
@@ -637,10 +625,10 @@ components:
         provided to the Buyer, where the Product is non-operational (for
         example, down, routing failures, severe packet drops, etc.).
       allOf:
-        - $ref: '#/components/schemas/CimIncident'
+        - $ref: "#/components/schemas/CimIncident"
         - type: object
           properties:
-            '@type':
+            "@type":
               description: >-
                 Used to unambiguously designate the class type when using
                 `oneOf`
@@ -648,8 +636,7 @@ components:
               enum:
                 - CimFailureIncident
             impact:
-              description:
-                The presumed impact on the Buyer for the referenced Product(s).
+              description: The presumed impact on the Buyer for the referenced Product(s).
               type: string
               enum:
                 - down
@@ -667,9 +654,8 @@ components:
         the operability of the network on one or more Buyers.
       type: object
       properties:
-        '@type':
-          description:
-            Used to unambiguously designate the class type when sub-classing
+        "@type":
+          description: Used to unambiguously designate the class type when sub-classing
           type: string
         attachment:
           description: >-
@@ -678,10 +664,9 @@ components:
             historical reasons).
           type: array
           items:
-            $ref: '#/components/schemas/AttachmentValue'
+            $ref: "#/components/schemas/AttachmentValue"
         closedDate:
-          description:
-            The date the CIM Incident status was set to closed by the Seller
+          description: The date the CIM Incident status was set to closed by the Seller
           type: string
           format: date-time
         creationDate:
@@ -698,19 +683,16 @@ components:
           type: string
           format: date-time
         href:
-          description: 'Hyperlink, a reference to the CIM Incident entity'
+          description: "Hyperlink, a reference to the CIM Incident entity"
           type: string
         id:
-          description:
-            Unique (within the Seller domain) identifier for the CIM Incident.
+          description: Unique (within the Seller domain) identifier for the CIM Incident.
           type: string
         impact:
-          description:
-            The presumed impact on the Buyer for the referenced Product(s).
+          description: The presumed impact on the Buyer for the referenced Product(s).
           type: string
         incidentType:
-          description:
-            The presumed cause of the CIM Incident as evaluated by the Seller.
+          description: The presumed cause of the CIM Incident as evaluated by the Seller.
           type: string
         note:
           description: >-
@@ -719,13 +701,13 @@ components:
             historical reasons).
           type: array
           items:
-            $ref: '#/components/schemas/Note'
+            $ref: "#/components/schemas/Note"
         priority:
           description: >-
             The priority (ITIL) is based on the assessment of the impact and
             urgency of how quickly the CIM Incident should be resolved after
             evaluation by the Seller of the impact of the CIM Incident.
-          $ref: '#/components/schemas/CimIncidentPriorityType'
+          $ref: "#/components/schemas/CimIncidentPriorityType"
         relatedContactInformation:
           description: >-
             Party playing a role in this CIM Incident.
@@ -740,7 +722,7 @@ components:
           type: array
           minItems: 1
           items:
-            $ref: '#/components/schemas/RelatedContactInformation'
+            $ref: "#/components/schemas/RelatedContactInformation"
         relatedEntity:
           description: >-
             A set of identifiers of the Products on which the CIM Incident could
@@ -748,18 +730,17 @@ components:
           type: array
           minItems: 1
           items:
-            $ref: '#/components/schemas/RelatedEntity'
+            $ref: "#/components/schemas/RelatedEntity"
         relatedIssue:
           description: >-
             A list of Issue Relationships. Represents relationships to other
             Trouble Tickets, Incidents, and CIM Incidents.
           type: array
           items:
-            $ref: '#/components/schemas/IssueRelationship'
+            $ref: "#/components/schemas/IssueRelationship"
         severity:
-          description:
-            The severity (ITIL) of the CIM Incident as evaluated by the Seller.
-          $ref: '#/components/schemas/CimIncidentSeverityType'
+          description: The severity (ITIL) of the CIM Incident as evaluated by the Seller.
+          $ref: "#/components/schemas/CimIncidentSeverityType"
         situationStartDate:
           description: >-
             The date when the situation was first identified, for example via
@@ -768,7 +749,7 @@ components:
           format: date-time
         status:
           description: The current status of the CIM Incident
-          $ref: '#/components/schemas/IncidentStatusType'
+          $ref: "#/components/schemas/IncidentStatusType"
         statusChange:
           description: >-
             The status change history that is associated to the CIM Incident.
@@ -776,9 +757,9 @@ components:
           type: array
           minItems: 1
           items:
-            $ref: '#/components/schemas/IncidentStatusChange'
+            $ref: "#/components/schemas/IncidentStatusChange"
       required:
-        - '@type'
+        - "@type"
         - creationDate
         - description
         - id
@@ -792,15 +773,15 @@ components:
         - status
         - statusChange
       discriminator:
-        propertyName: '@type'
+        propertyName: "@type"
         mapping:
-          CimFailureIncident: '#/components/schemas/CimFailureIncident'
-          CimServiceImpairmentIncident: '#/components/schemas/CimServiceImpairmentIncident'
-          CimMaintenanceIncident: '#/components/schemas/CimMaintenanceIncident'
+          CimFailureIncident: "#/components/schemas/CimFailureIncident"
+          CimServiceImpairmentIncident: "#/components/schemas/CimServiceImpairmentIncident"
+          CimMaintenanceIncident: "#/components/schemas/CimMaintenanceIncident"
       oneOf:
-        - $ref: '#/components/schemas/CimFailureIncident'
-        - $ref: '#/components/schemas/CimServiceImpairmentIncident'
-        - $ref: '#/components/schemas/CimMaintenanceIncident'
+        - $ref: "#/components/schemas/CimFailureIncident"
+        - $ref: "#/components/schemas/CimServiceImpairmentIncident"
+        - $ref: "#/components/schemas/CimMaintenanceIncident"
     CimIncidentPriorityType:
       description: Possible values for the priority of CIM Incident
       type: string
@@ -849,10 +830,10 @@ components:
         a Product for the Buyer, which also includes the planned ending time and
         date.
       allOf:
-        - $ref: '#/components/schemas/CimIncident'
+        - $ref: "#/components/schemas/CimIncident"
         - type: object
           properties:
-            '@type':
+            "@type":
               description: >-
                 Used to unambiguously designate the class type when using
                 `oneOf`
@@ -860,9 +841,8 @@ components:
               enum:
                 - CimMaintenanceIncident
             impact:
-              description:
-                The presumed impact on the Buyer for the referenced Product(s).
-              $ref: '#/components/schemas/MEFObservedImpactType'
+              description: The presumed impact on the Buyer for the referenced Product(s).
+              $ref: "#/components/schemas/MEFObservedImpactType"
             incidentType:
               description: >-
                 The presumed cause of the CIM Incident as evaluated by the
@@ -881,10 +861,10 @@ components:
         (for example, excessive traffic drops due to policing) and/or traffic
         congestion exceeding thresholds.
       allOf:
-        - $ref: '#/components/schemas/CimIncident'
+        - $ref: "#/components/schemas/CimIncident"
         - type: object
           properties:
-            '@type':
+            "@type":
               description: >-
                 Used to unambiguously designate the class type when using
                 `oneOf`
@@ -892,8 +872,7 @@ components:
               enum:
                 - CimServiceImpairmentIncident
             impact:
-              description:
-                The presumed impact on the Buyer for the referenced Product(s).
+              description: The presumed impact on the Buyer for the referenced Product(s).
               type: string
               enum:
                 - degraded
@@ -944,10 +923,9 @@ components:
       required:
         - reason
     Error400:
-      description:
-        'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
+      description: "Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)"
       allOf:
-        - $ref: '#/components/schemas/Error'
+        - $ref: "#/components/schemas/Error"
         - type: object
           properties:
             code:
@@ -963,7 +941,7 @@ components:
                 - invalidQuery: The query section of the URI is invalid.
 
                 - invalidBody: The request has an invalid body
-              $ref: '#/components/schemas/Error400Code'
+              $ref: "#/components/schemas/Error400Code"
           required:
             - code
     Error400Code:
@@ -986,10 +964,9 @@ components:
         - invalidQuery
         - invalidBody
     Error401:
-      description:
-        'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
+      description: "Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)"
       allOf:
-        - $ref: '#/components/schemas/Error'
+        - $ref: "#/components/schemas/Error"
         - type: object
           properties:
             code:
@@ -1000,7 +977,7 @@ components:
 
                 - invalidCredentials: Provided credentials are invalid or
                 expired
-              $ref: '#/components/schemas/Error401Code'
+              $ref: "#/components/schemas/Error401Code"
           required:
             - code
     Error401Code:
@@ -1018,7 +995,7 @@ components:
         but refuses to authorize it.
         (https://tools.ietf.org/html/rfc7231#section-6.5.3)
       allOf:
-        - $ref: '#/components/schemas/Error'
+        - $ref: "#/components/schemas/Error"
         - type: object
           properties:
             code:
@@ -1029,7 +1006,7 @@ components:
                 - accessDenied: Access denied
                 - forbiddenRequester: Forbidden requester
                 - tooManyUsers: Too many users
-              $ref: '#/components/schemas/Error403Code'
+              $ref: "#/components/schemas/Error403Code"
           required:
             - code
     Error403Code:
@@ -1050,7 +1027,7 @@ components:
         Resource for the requested path not found.
         (https://tools.ietf.org/html/rfc7231#section-6.5.4)
       allOf:
-        - $ref: '#/components/schemas/Error'
+        - $ref: "#/components/schemas/Error"
         - type: object
           properties:
             code:
@@ -1069,7 +1046,7 @@ components:
         Unprocessable entity due to a business validation problem.
         (https://tools.ietf.org/html/rfc4918#section-11.2)
       allOf:
-        - $ref: '#/components/schemas/Error'
+        - $ref: "#/components/schemas/Error"
         - type: object
           properties:
             code:
@@ -1082,7 +1059,7 @@ components:
                   - unexpectedProperty: Additional property, not expected by the Seller has been provided
                   - tooManyRecords: the number of records to be provided in the response exceeds the Seller's threshold.
                   - otherIssue: Other problem was identified (detailed information provided in a reason)
-              $ref: '#/components/schemas/Error422Code'
+              $ref: "#/components/schemas/Error422Code"
             propertyPath:
               description: >
                 A pointer to a particular property of the payload that caused
@@ -1118,7 +1095,7 @@ components:
         Internal Server Error.
         (https://tools.ietf.org/html/rfc7231#section-6.6.1)
       allOf:
-        - $ref: '#/components/schemas/Error'
+        - $ref: "#/components/schemas/Error"
         - type: object
           properties:
             code:
@@ -1138,7 +1115,7 @@ components:
         Not Implemented. Used in case Seller is not supporting an optional
         operation (https://tools.ietf.org/html/rfc7231#section-6.6.2)
       allOf:
-        - $ref: '#/components/schemas/Error'
+        - $ref: "#/components/schemas/Error"
         - type: object
           properties:
             code:
@@ -1226,15 +1203,13 @@ components:
             suffix for the street number if there is no range
           type: string
         streetNrLast:
-          description:
-            Last number in a range of street numbers allocated to an Address
+          description: Last number in a range of street numbers allocated to an Address
           type: string
         streetNrLastSuffix:
           description: Last street number suffix for a ranged Address
           type: string
         streetPreDirection:
-          description:
-            The direction of the street that appears before the Street Name
+          description: The direction of the street that appears before the Street Name
           type: string
         streetName:
           description: Name of the street or other street type
@@ -1286,7 +1261,7 @@ components:
             sub-unit information such as SUITE 42 ROOM A
           type: array
           items:
-            $ref: '#/components/schemas/SubUnit'
+            $ref: "#/components/schemas/SubUnit"
         buildingName:
           description: >
             The well-known name of a building that is located at this Address
@@ -1322,7 +1297,7 @@ components:
           type: string
         status:
           description: Reached status
-          $ref: '#/components/schemas/IncidentStatusType'
+          $ref: "#/components/schemas/IncidentStatusType"
     IncidentStatusType:
       description: |
         Possible values for the status of the Incident
@@ -1338,13 +1313,11 @@ components:
         - created
         - inProgress
     IssueRelationship:
-      description:
-        Represents relationships to other Trouble Tickets and Incidents
+      description: Represents relationships to other Trouble Tickets and Incidents
       type: object
       properties:
-        '@referredType':
-          description:
-            The type of the referred Issue (Incident or TroubleTicket)
+        "@referredType":
+          description: The type of the referred Issue (Incident or TroubleTicket)
           type: string
         creationDate:
           description: The date the relationship was created
@@ -1372,9 +1345,9 @@ components:
           description: >-
             Indicates if this Related Issue was added by the Buyer or the
             Seller.
-          $ref: '#/components/schemas/MEFBuyerSellerType'
+          $ref: "#/components/schemas/MEFBuyerSellerType"
       required:
-        - '@referredType'
+        - "@referredType"
         - creationDate
         - description
         - id
@@ -1396,7 +1369,7 @@ components:
           format: float
         units:
           description: Byte Unit
-          $ref: '#/components/schemas/DataSizeUnit'
+          $ref: "#/components/schemas/DataSizeUnit"
       required:
         - amount
         - units
@@ -1436,7 +1409,7 @@ components:
           type: string
         source:
           description: Indicates if this Note was added by the Buyer or Seller.
-          $ref: '#/components/schemas/MEFBuyerSellerType'
+          $ref: "#/components/schemas/MEFBuyerSellerType"
         text:
           description: Text of the note
           type: string
@@ -1467,7 +1440,7 @@ components:
           description: >-
             Identifies the postal address of the person or office to be
             contacted.
-          $ref: '#/components/schemas/FieldedAddressRepresentation'
+          $ref: "#/components/schemas/FieldedAddressRepresentation"
         organization:
           description: The organization or company that the contact belongs to
           type: string
@@ -1488,7 +1461,7 @@ components:
         advance.
       type: object
       properties:
-        '@referredType':
+        "@referredType":
           description: >-
             The actual type of the target instance when needed for
             disambiguation.
@@ -1504,7 +1477,7 @@ components:
           description: The role of an entity.
           type: string
       required:
-        - '@referredType'
+        - "@referredType"
         - id
         - role
     SubUnit:
