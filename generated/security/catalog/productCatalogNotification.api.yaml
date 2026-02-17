@@ -28,7 +28,7 @@ info:
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the Mplify Alliance and its contributors.
   title: Product Catalog Notification
-  version: 4.0.0-RC
+  version: 4.0.1
 servers:
   - url: 'https://{serverBase}/mefApi/cantata/productCatalogNotifications/v4/'
     variables:
@@ -39,12 +39,14 @@ security:
   - oauth2MEFLSOAPI:
       - default
 tags:
-  - description: The Buyer's endpoint to send particular event types notifications to.
+  - description:
+      The Buyer's endpoint to send particular event types notifications to.
     name: Notification listeners
 paths:
   /listener/categoryCreateEvent:
     post:
-      description: Client listener for receiving the notification CategoryCreateEvent
+      description:
+        Client listener for receiving the notification CategoryCreateEvent
       operationId: listenToCategoryCreateEvent
       parameters:
         - description: >-
@@ -74,7 +76,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -139,7 +142,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -204,7 +208,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -269,7 +274,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -297,7 +303,8 @@ paths:
       security:
         - oauth2MEFLSOAPI:
             - listenToProductOfferingAttributeValueChangeEvent
-      summary: Client listener for entity ProductOfferingAttributeValueChangeEvent
+      summary:
+        Client listener for entity ProductOfferingAttributeValueChangeEvent
       tags:
         - Notification listeners
   /listener/productOfferingStateChangeEvent:
@@ -334,7 +341,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -399,7 +407,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -465,7 +474,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -493,7 +503,8 @@ paths:
       security:
         - oauth2MEFLSOAPI:
             - listenToProductSpecificationAttributeValueChangeEvent
-      summary: Client listener for entity ProductSpecificationAttributeValueChangeEvent
+      summary:
+        Client listener for entity ProductSpecificationAttributeValueChangeEvent
       tags:
         - Notification listeners
   /listener/productSpecificationStateChangeEvent:
@@ -530,7 +541,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -596,7 +608,8 @@ components:
           required:
             - code
           type: object
-      description: 'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
+      description:
+        'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
     Error400Code:
       description: >-
         One of the following error codes:
@@ -625,7 +638,8 @@ components:
           required:
             - code
           type: object
-      description: 'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
+      description:
+        'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
     Error401Code:
       description: |-
         One of the following error codes:
@@ -644,7 +658,8 @@ components:
           required:
             - code
           type: object
-      description: 'Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)'
+      description:
+        'Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)'
     Error403Code:
       description: |-
         This code indicates that the server understood
@@ -733,7 +748,8 @@ components:
             - eventType
           type: object
     ProductCategoryEventPayload:
-      description: The identifier of the Product Category being subject of this event.
+      description:
+        The identifier of the Product Category being subject of this event.
       properties:
         id:
           description: ID of the Product Category attributed by the Seller
@@ -776,7 +792,8 @@ components:
             - eventType
           type: object
     ProductOfferingEventPayload:
-      description: The identifier of the Product Offering being subject of this event.
+      description:
+        The identifier of the Product Offering being subject of this event.
       properties:
         id:
           description: ID of the Product Offering attributed by the Seller
@@ -874,7 +891,8 @@ components:
             - eventType
           type: object
     ProductOfferingStateChangeEventPayload:
-      description: The identifier of the Product Offering being subject of this event.
+      description:
+        The identifier of the Product Offering being subject of this event.
       properties:
         id:
           description: ID of the Product Offering attributed by the Seller
@@ -920,7 +938,8 @@ components:
             - eventType
           type: object
     ProductSpecificationEventPayload:
-      description: The identifier of the Product Specification being subject of this event.
+      description:
+        The identifier of the Product Specification being subject of this event.
       properties:
         id:
           description: ID of the Product Specification attributed by the Seller
@@ -974,7 +993,8 @@ components:
             - eventType
           type: object
     ProductSpecificationStateChangeEventPayload:
-      description: The identifier of the Product Specification being subject of this event.
+      description:
+        The identifier of the Product Specification being subject of this event.
       properties:
         id:
           description: ID of the Product Specification attributed by the Seller

@@ -1,13 +1,10 @@
 openapi: 3.0.1
 info:
   description: >
-    **This file forms part of MEF W175**
+    **This file forms part of Mplify 175**
 
 
-    **This draft represents MEF work in progress and is subject to change.**
-
-
-    This API implements Business Requirements described in MEF 113 and MEF 173
+    This API implements Business Requirements described in Mplify 113 and 173
 
 
     It allows the Buyer to retrieve CIM Incident as well as register for event
@@ -31,7 +28,7 @@ info:
     - Register for Event Notifications
 
 
-    Copyright 2025 MEF Forum and its contributors
+    Copyright 2025 Mplify Alliance and its contributors
 
 
     This file includes content based on the TM Forum Trouble Ticket API (TMF621
@@ -40,9 +37,9 @@ info:
 
     which is licensed by the TM Forum under the Apache License version 2.0.
 
-    Such content has been modified by the MEF Forum and its contributors.
+    Such content has been modified by the Mplify Alliance and its contributors.
   title: Circuit Impairment and Maintenance
-  version: 1.0.0-RC
+  version: 1.0.0
 servers:
   - url: 'https://{serverBase}/mefApi/cantata/cimIncident/v1/'
     variables:
@@ -87,7 +84,8 @@ paths:
           required: false
           schema:
             $ref: '#/components/schemas/MEFObservedImpactType'
-        - description: The presumed cause of the CIM Incident as evaluated by the Seller.
+        - description:
+            The presumed cause of the CIM Incident as evaluated by the Seller.
           in: query
           name: incidentType
           required: false
@@ -116,7 +114,8 @@ paths:
           schema:
             default: Product
             type: string
-        - description: The date on which the CIM Incident was created - greater than
+        - description:
+            The date on which the CIM Incident was created - greater than
           in: query
           name: creationDate.gt
           required: false
@@ -202,7 +201,8 @@ paths:
           required: false
           schema:
             type: string
-        - description: Requested index for start of resources to be provided in response
+        - description:
+            Requested index for start of resources to be provided in response
           in: query
           name: offset
           required: false
@@ -365,7 +365,8 @@ paths:
         - CIM Incident
   /hub:
     post:
-      description: The Buyer requests to subscribe to CIM Incident Notifications.
+      description:
+        The Buyer requests to subscribe to CIM Incident Notifications.
       operationId: registerListener
       parameters:
         - description: >-
@@ -391,7 +392,8 @@ paths:
           application/json;charset=utf-8:
             schema:
               $ref: '#/components/schemas/EventSubscriptionInput'
-        description: Data containing the callback endpoint to deliver the information
+        description:
+          Data containing the callback endpoint to deliver the information
         required: true
       responses:
         '201':
@@ -399,7 +401,8 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/EventSubscription'
-          description: 'Subscribed  (https://tools.ietf.org/html/rfc7231#section-6.3.2)'
+          description:
+            'Subscribed  (https://tools.ietf.org/html/rfc7231#section-6.3.2)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -425,7 +428,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Error422'
                 type: array
-          description: Unprocessable entity due to the business validation problems
+          description:
+            Unprocessable entity due to the business validation problems
         '500':
           content:
             application/json;charset=utf-8:
@@ -443,12 +447,14 @@ paths:
       security:
         - oauth2MEFLSOAPI:
             - registerListener
-      summary: Allows the Buyer to register to CIM Incident status change notifications
+      summary:
+        Allows the Buyer to register to CIM Incident status change notifications
       tags:
         - events subscription
   '/hub/{id}':
     delete:
-      description: The Buyer requests to unsubscribe from CIM Incident Notifications
+      description:
+        The Buyer requests to unsubscribe from CIM Incident Notifications
       operationId: unregisterListener
       parameters:
         - description: The id of the EventSubscription
@@ -477,7 +483,8 @@ paths:
             type: string
       responses:
         '204':
-          description: 'Deleted (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'Deleted (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -607,7 +614,8 @@ components:
         through video, pictures...
       properties:
         author:
-          description: The name of the person or organization who added the Attachment.
+          description:
+            The name of the person or organization who added the Attachment.
           type: string
         creationDate:
           description: The date the Attachment was added.
@@ -650,7 +658,8 @@ components:
                 - CimFailureIncident
               type: string
             impact:
-              description: The presumed impact on the Buyer for the referenced Product(s).
+              description:
+                The presumed impact on the Buyer for the referenced Product(s).
               enum:
                 - down
               type: string
@@ -683,7 +692,8 @@ components:
         - $ref: '#/components/schemas/CimMaintenanceIncident'
       properties:
         '@type':
-          description: Used to unambiguously designate the class type when sublassing
+          description:
+            Used to unambiguously designate the class type when sub-classing
           type: string
         attachment:
           description: >-
@@ -694,7 +704,8 @@ components:
             $ref: '#/components/schemas/AttachmentValue'
           type: array
         closedDate:
-          description: The date the CIM Incident status was set to closed by the Seller
+          description:
+            The date the CIM Incident status was set to closed by the Seller
           format: date-time
           type: string
         creationDate:
@@ -714,13 +725,16 @@ components:
           description: 'Hyperlink, a reference to the CIM Incident entity'
           type: string
         id:
-          description: Unique (within the Seller domain) identifier for the CIM Incident.
+          description:
+            Unique (within the Seller domain) identifier for the CIM Incident.
           type: string
         impact:
-          description: The presumed impact on the Buyer for the referenced Product(s).
+          description:
+            The presumed impact on the Buyer for the referenced Product(s).
           type: string
         incidentType:
-          description: The presumed cause of the CIM Incident as evaluated by the Seller.
+          description:
+            The presumed cause of the CIM Incident as evaluated by the Seller.
           type: string
         note:
           description: >-
@@ -757,8 +771,8 @@ components:
           type: array
         relatedIssue:
           description: >-
-            A list of Related Issue relationships. Represents relationships to
-            other Trouble Tickets, Incidents, and CIM Incidents.
+            A list of Issue Relationships. Represents relationships to other
+            Trouble Tickets, Incidents, and CIM Incidents.
           items:
             $ref: '#/components/schemas/IssueRelationship'
           type: array
@@ -821,7 +835,7 @@ components:
 
 
         - failure - Any Situation where the Product is non-operational, such as
-        down, routing fail-ures or severe packet drops.
+        down, routing failures or severe packet drops.
 
 
         - plannedMaintenance -Any scheduled maintenance that may impact a
@@ -829,7 +843,7 @@ components:
 
 
         - policing - Any Situation due to traffic violating traffic profiles
-        as-sociated with the subscribed service, such as traffic drops due to
+        associated with the subscribed service, such as traffic drops due to
         policing.
       enum:
         - congestion
@@ -877,7 +891,8 @@ components:
               type: string
             impact:
               $ref: '#/components/schemas/Impact'
-              description: The presumed impact on the Buyer for the referenced Product(s).
+              description:
+                The presumed impact on the Buyer for the referenced Product(s).
             incidentType:
               $ref: '#/components/schemas/IncidentType'
               description: >-
@@ -887,10 +902,10 @@ components:
       description: >-
         Sent when the Seller detects an occurrence of a Situation on a Product
         provided to the Buyer, where the Product is not meeting the Product
-        specifications or is not opera-tional on an intermittent basis. This
-        includes impair-ments due to traffic violating traffic profile
-        thresholds (for example, excessive traffic drops due to policing) and/or
-        traffic congestion exceeding thresholds.
+        specifications or is not operational on an intermittent basis. This
+        includes impairments due to traffic violating traffic profile thresholds
+        (for example, excessive traffic drops due to policing) and/or traffic
+        congestion exceeding thresholds.
     DataSizeUnit:
       description: The unit of measure in the data size.
       enum:
@@ -917,7 +932,7 @@ components:
           type: string
         reason:
           description: >-
-            Text that explains the reason the for error. This can be shown to a
+            Text that explains the reason for the error. This can be shown to a
             client user.
           maxLength: 255
           type: string
@@ -937,7 +952,8 @@ components:
           required:
             - code
           type: object
-      description: 'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
+      description:
+        'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
     Error400Code:
       description: >-
         One of the following error codes:
@@ -966,7 +982,8 @@ components:
           required:
             - code
           type: object
-      description: 'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
+      description:
+        'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
     Error401Code:
       description: |-
         One of the following error codes:
@@ -1128,27 +1145,24 @@ components:
 
 
         | API name                                 | MEF 113 name          |
-        Description                                                                                                                                                                                                                                                                                                          
+        Description                                                                                      
         |
 
         | ---------------------------------------- | --------------------- |
-        ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        -------------------------------------------------------------------------------------------------
         |
 
         | `cimIncidentCreateEvent`                 | INCIDENT_CREATE       | A
         new CIM Incident was created by the
-        Seller.                                                                                                                                                                                                                                                                            
-        |
+        Seller.                                                    |
 
         | `cimIdentAttributeValueChangeEvent`      | INCIDENT_UPDATE       | An
         open CIM Incident was updated by the
-        Seller.                                                                                                                                                                                                                                                                          
-        |
+        Seller.                                                  |
 
         | `cimIdentStatusChangeEvent`              | INCIDENT_STATE_CHANGE | An
         CIM Incident `status` was changed by the
-        Seller.                                                                                                                                                                                                                                                                      
-        |
+        Seller.                                              |
       properties:
         callback:
           description: >-
@@ -1191,13 +1205,15 @@ components:
             suffix for the street number if there is no range
           type: string
         streetNrLast:
-          description: Last number in a range of street numbers allocated to an Address
+          description:
+            Last number in a range of street numbers allocated to an Address
           type: string
         streetNrLastSuffix:
           description: Last street number suffix for a ranged Address
           type: string
         streetPreDirection:
-          description: The direction of the street that appears before the Street Name
+          description:
+            The direction of the street that appears before the Street Name
           type: string
         streetName:
           description: Name of the street or other street type
@@ -1292,34 +1308,36 @@ components:
 
 
         | status       | MEF 113 name |
-        Description                                                                                                                                                             
+        Description                                                                                                        
         |
 
         | ------------ | ------------ |
-        ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        -------------------------------------------------------------------------------------------------------------------
         |
 
         | `closed`     | CLOSED       | The Situation described in the Incident
         was closed by has been resolved and normal operation has been restored
-        on the Seller.Seller's network. This is a terminal status. |
+        on the Seller's network. This is a terminal status. |
 
         | `created`    | CREATED      | A new Incident has been created and
         allocated a unique
-        `id`.                                                                                                            
-        |
+        `id`.                                                       |
 
         | `inProgress` | IN_PROGRESS  | The Incident is in the process of being
-        handled and investigated for resolution by the Seller.
+        handled and investigated for resolution by the
+        Seller.                     |
       enum:
         - closed
         - created
         - inProgress
       type: string
     IssueRelationship:
-      description: Represents relationships to other Trouble Tickets and Incidents
+      description:
+        Represents relationships to other Trouble Tickets and Incidents
       properties:
         '@referredType':
-          description: The type of the referred Issue (Incident or TroubleTicket)
+          description:
+            The type of the referred Issue (Incident or TroubleTicket)
           type: string
         creationDate:
           description: The date the relationship was created
@@ -1493,13 +1511,15 @@ components:
         - subUnitType
       type: object
     Impact:
-      description: The presumed impact on the Buyer for the referenced Product(s).
+      description:
+        The presumed impact on the Buyer for the referenced Product(s).
       enum:
         - degraded
         - intermittent
       type: string
     IncidentType:
-      description: The presumed cause of the CIM Incident as evaluated by the Seller.
+      description:
+        The presumed cause of the CIM Incident as evaluated by the Seller.
       enum:
         - policing
         - congestion

@@ -36,7 +36,7 @@ info:
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the Mplify Alliance and its contributors.
   title: Product Catalog
-  version: 4.0.0-RC
+  version: 4.0.1
 servers:
   - url: 'http://{serverBase}/mefApi/cantata/productCatalog/v4/'
     variables:
@@ -169,7 +169,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Error422'
                 type: array
-          description: Unprocessable entity due to the business validation problems
+          description:
+            Unprocessable entity due to the business validation problems
         '500':
           content:
             application/json;charset=utf-8:
@@ -458,7 +459,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Error422'
                 type: array
-          description: Unprocessable entity due to the business validation problems
+          description:
+            Unprocessable entity due to the business validation problems
         '500':
           content:
             application/json;charset=utf-8:
@@ -584,6 +586,16 @@ paths:
             format: date-time
             type: string
         - description: >-
+            The name of the Seller's standard offer arrangement (such as a
+            framework agreement). The name is unique within the Seller domain.
+            This should be the name of the Seller's standard offer arrangement
+            or framework agreement for the Product Specification.
+          in: query
+          name: agreement
+          required: false
+          schema:
+            type: string
+        - description: >-
             The unique identifier of the organization that is acting as a Buyer.
             MUST be specified in the request only when the requester represents
             more than one Buyer.
@@ -672,7 +684,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Error422'
                 type: array
-          description: Unprocessable entity due to the business validation problems
+          description:
+            Unprocessable entity due to the business validation problems
         '500':
           content:
             application/json;charset=utf-8:
@@ -790,7 +803,8 @@ paths:
           application/json;charset=utf-8:
             schema:
               $ref: '#/components/schemas/EventSubscriptionInput'
-        description: Data containing the callback endpoint to deliver the information
+        description:
+          Data containing the callback endpoint to deliver the information
         required: true
       responses:
         '201':
@@ -824,7 +838,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/Error422'
                 type: array
-          description: Unprocessable entity due to the business validation problems
+          description:
+            Unprocessable entity due to the business validation problems
         '500':
           content:
             application/json;charset=utf-8:
@@ -1005,7 +1020,8 @@ components:
         through video, pictures...
       properties:
         author:
-          description: The name of the person or organization who added the Attachment.
+          description:
+            The name of the person or organization who added the Attachment.
           type: string
         creationDate:
           description: The date the Attachment was added.
@@ -1039,7 +1055,7 @@ components:
     BusinessFunctionMask:
       description: >-
         Business Function that could be executed for the given Product
-        accordingly to LSO Cantata/cantata IRPs.  Value 'all' is the wildcard -
+        accordingly to LSO Cantata/Sonata IRPs.  Value 'all' is the wildcard -
         stands for any action.
       enum:
         - poq
@@ -1119,7 +1135,8 @@ components:
           required:
             - code
           type: object
-      description: 'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
+      description:
+        'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
     Error400Code:
       description: >-
         One of the following error codes:
@@ -1148,7 +1165,8 @@ components:
           required:
             - code
           type: object
-      description: 'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
+      description:
+        'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
     Error401Code:
       description: |-
         One of the following error codes:
@@ -1351,13 +1369,15 @@ components:
             suffix for the street number if there is no range
           type: string
         streetNrLast:
-          description: Last number in a range of street numbers allocated to an Address
+          description:
+            Last number in a range of street numbers allocated to an Address
           type: string
         streetNrLastSuffix:
           description: Last street number suffix for a ranged Address
           type: string
         streetPreDirection:
-          description: The direction of the street that appears before the Street Name
+          description:
+            The direction of the street that appears before the Street Name
           type: string
         streetName:
           description: Name of the street or other street type
@@ -1488,7 +1508,8 @@ components:
         - name
       type: object
     MEFPriceType:
-      description: Indicates if the price is for recurring or non-recurring charges.
+      description:
+        Indicates if the price is for recurring or non-recurring charges.
       enum:
         - recurring
         - nonRecurring
@@ -1498,7 +1519,8 @@ components:
       description: A base/value business entity used to represent money
       properties:
         unit:
-          description: Currency (ISO4217 norm uses 3 letters to define the currency)
+          description:
+            Currency (ISO4217 norm uses 3 letters to define the currency)
           type: string
         value:
           description: A positive floating point number
@@ -1582,7 +1604,8 @@ components:
         currency of a Price
       properties:
         taxRate:
-          description: 'Price Tax Rate. Unit: [%]. E.g. value 16 stand for 16% tax.'
+          description:
+            'Price Tax Rate. Unit: [%]. E.g. value 16 stand for 16% tax.'
           format: float
           type: number
         taxIncludedAmount:
@@ -1673,7 +1696,8 @@ components:
           format: uri
           type: string
         name:
-          description: The name (unique within the Seller domain) of the Product Category
+          description:
+            The name (unique within the Seller domain) of the Product Category
           type: string
         description:
           description: Description of the Product Category
@@ -1710,7 +1734,8 @@ components:
       description: Represents the reference to Category
       properties:
         id:
-          description: Unique (within the Seller domain) identifier for the Category
+          description:
+            Unique (within the Seller domain) identifier for the Category
           type: string
         href:
           description: Hyperlink to access the Category
@@ -1730,7 +1755,8 @@ components:
             corresponding MEF Product Specification).
           type: string
         description:
-          description: The explanation of what the milestone represents and when it occurs.
+          description:
+            The explanation of what the milestone represents and when it occurs.
           type: string
       required:
         - description
@@ -2173,7 +2199,6 @@ components:
             Represents entities that are launched from the provider of the
             catalog, this resource includes pricing information.
           required:
-            - agreement
             - category
             - channel
             - id
@@ -2245,7 +2270,9 @@ components:
             attachment:
               description: >-
                 Complements the Product Offering description with presentation,
-                video, pictures, etc.
+                video, pictures, etc. Note: The Seller should include all
+                documents describing the Standard Framework Agreement as an
+                Attachment.
               items:
                 $ref: '#/components/schemas/AttachmentValue'
               type: array
@@ -2253,8 +2280,8 @@ components:
               description: >-
                 Specifies the relationships with their names between Products
                 described by related Product Specifications. As an example, an
-                Access E-Line OVC references an Operator UNI and ENNI Product
-                Specifications.
+                Access E-Line OVC references an Operator UNI and an ENNI Product
+                Specification.
               items:
                 $ref: '#/components/schemas/ProductRelationshipConstraint'
               type: array
@@ -2328,7 +2355,8 @@ components:
         - id
       type: object
     ProductSpecification_Common:
-      description: Is the basis for all Production Specification representations.
+      description:
+        Is the basis for all Production Specification representations.
       properties:
         id:
           description: >-
@@ -2349,6 +2377,13 @@ components:
             The date and time of an attribute within this Product Specification
             was created or most recently updated.
           format: date-time
+          type: string
+        agreement:
+          description: >-
+            The name of the Seller's standard offer arrangement (such as a
+            framework agreement). The name is unique within the Seller domain.
+            This should be the name of the Seller's standard offer arrangement
+            or framework agreement for the Product Specification.
           type: string
       type: object
     ProductSpecification_Find:

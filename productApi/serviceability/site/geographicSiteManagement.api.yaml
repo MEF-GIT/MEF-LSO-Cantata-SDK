@@ -1,25 +1,38 @@
 openapi: 3.0.1
 info:
   title: Geographic Site Management
-  description: |
+  description: >
     **This file forms part of Mplify 122.1**
+
 
     This API implements Business Requirements described in Mplify 150
 
+
     It allows to retrieve a list of Geographic Sites and to get all
+
     information for one geographic site.
+
 
     List of supported Use Cases:
 
+
     - Retrieve Service Site List
+
     - Retrieve Service Site by Identifier
+
 
     Copyright 2025 Mplify Alliance and its contributors.
 
-    This file includes content based on the TM Forum Geographic Site Management API
+
+    This file includes content based on the TM Forum Geographic Site Management
+    API
+
     (TMF674 v4.0.0) available at
+
     https://github.com/tmforum-apis/TMF674_GeographicSite, which is licensed
+
     by the TM Forum under the Apache License version 2.0. Such content has been
+
     modified by the Mplify Alliance and its contributors.
   version: 8.0.0
 servers:
