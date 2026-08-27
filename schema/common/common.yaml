@@ -1,54 +1,92 @@
 ---
 $schema: http://json-schema.org/draft-07/schema#
-description: Common schemas
-title: MEF LSO Common Types
+description: Mplify LSO Common Types
+title: Mplify LSO Common Types
 # ---------------------
 # Disclaimer
 #
-# © MEF Forum 2023. All Rights Reserved.
+# © Mplify Alliance 2026. All Rights Reserved.
 #
-# The information in this publication is freely available for reproduction
-# and use by any recipient and is believed to be accurate as of its
-# publication date. Such information is subject to change without notice
-# and MEF Forum (MEF) is not responsible for any errors. MEF does not
-# assume responsibility to update or correct any information in this
-# publication. No representation or warranty, expressed or implied, is
-# made by MEF concerning the completeness, accuracy, or applicability of
-# any information contained herein and no liability of any kind shall be
-# assumed by MEF as a result of reliance upon such information.
+# The information in this publication is freely available for reproduction and
+# use by any recipient and is believed to be accurate as of its publication date.
+# Such information is subject to change without notice and Mplify Alliance
+# (Mplify) is not responsible for any errors. Mplify does not assume
+# responsibility to update or correct any information in this publication. No
+# representation or warranty, expressed or implied, is made by Mplify concerning
+# the completeness, accuracy, or applicability of any information contained
+# herein and no liability of any kind shall be assumed by Mplify as a result of
+# reliance upon such information.
 #
-# The information contained herein is intended to be used without
-# modification by the recipient or user of this document. MEF is not
-# responsible or liable for any modifications to this document made by any
-# other party.
+# The information contained herein is intended to be used without modification by
+# the recipient or user of this document. Mplify is not responsible or liable for
+# any modifications to this document made by any other party.
 #
-# The receipt or any use of this document or its contents
-# does not in any way create, by implication or otherwise:
+# The receipt or any use of this document or its contents does not in any way
+# create, by implication or otherwise:
 #
-# a) any express or implied license or right to or under any patent,
-# copyright, trademark or trade secret rights held or claimed by any MEF
-# member which are or may be associated with the ideas, techniques,
-# concepts or expressions contained herein; nor
+# - (a) any express or implied license or right to or under any patent,
+#   copyright, trademark or trade secret rights held or claimed by any Mplify
+#   member which are or may be associated with the ideas, techniques, concepts or
+#   expressions contained herein; nor
 #
-# b) any warranty or representation that any MEF members will announce
-# any product(s) and/or service(s) related thereto, or if such
-# announcements are made, that such announced product(s) and/or service(s)
-# embody any or all of the ideas, technologies, or concepts contained
-# herein; nor
+# - (b) any warranty or representation that any Mplify member will announce any
+#   product(s) and/or service(s) related thereto, or if such announcements are
+#   made, that such announced product(s) and/or service(s) embody any or all of
+#   the ideas, technologies, or concepts contained herein; nor
 #
-# c) any form of relationship between any MEF member and the recipient
-# or user of this document.
+# - (c) any form of relationship between any Mplify member and the recipient or
+#   user of this document.
 #
-# Implementation or use of specific MEF standards, specifications, or
-# recommendations will be voluntary, and no Member shall be obliged to
-# implement them by virtue of participation in MEF Forum. MEF is a
-# non-profit international organization to enable the development and
-# worldwide adoption of agile, assured and orchestrated network services.
-# MEF does not, expressly or otherwise, endorse or promote any specific
-# products or services.
+# Implementation or use of specific Mplify standards, specifications or
+# recommendations will be voluntary, and no Member shall be obliged to implement
+# them by virtue of participation in Mplify Alliance. Mplify is a non-profit
+# international organization to enable the development and worldwide adoption of
+# agile, assured and orchestrated network services. Mplify does not, expressly or
+# otherwise, endorse or promote any specific products or services.
 # ---------------------
 #
 definitions:
+  AttachmentValue:
+    description: >-
+      Complements the description of an element (for instance a product)
+      through video, pictures...
+    type: object
+    properties:
+      author:
+        description:
+          The name of the person or organization who added the Attachment.
+        type: string
+      creationDate:
+        description: The date the Attachment was added.
+        type: string
+        format: date-time
+      description:
+        description: A narrative text describing the content of the attachment
+        type: string
+      mimeType:
+        description: >-
+          Attachment mime type such as extension file for video, picture and
+          document
+        type: string
+      name:
+        description: The name of the attachment
+        type: string
+      size:
+        description: The size of the attachment.
+        $ref: '#/definitions/MEFByteSize'
+      source:
+        description:
+          Indicates if the attachment was added by the Buyer or the Seller.
+        $ref: '#/definitions/MEFBuyerSellerType'
+      url:
+        description: URL where the attachment is located.
+        type: string
+    required:
+      - author
+      - creationDate
+      - name
+      - source
+      - url
   BiDirSimpleBandwidth:
     description: The upstream and downstream bandwidth
     properties:
@@ -73,6 +111,7 @@ definitions:
       - SC
       - LC
       - OTHER
+  # deprecated - use MEFByteSize instead
   DataSize:
     type: object
     description: >-
@@ -90,6 +129,20 @@ definitions:
           40 KBYTES, this element is KBYTES. Note that the units indicate
           binary values, e.g., KBYTES is 1024 bytes.
         $ref: '#/definitions/DataSizeUnits'
+  DataSizeUnit:
+    description: The unit of measure in the data size.
+    type: string
+    enum:
+      - BYTES
+      - KBYTES
+      - MBYTES
+      - GBYTES
+      - TBYTES
+      - PBYTES
+      - EBYTES
+      - ZBYTES
+      - YBYTES
+  # deprecated - use DataSizeUnit instead
   DataSizeUnits:
     description: Data size in multiples of bytes (e.g., BYTES or MBYTES)
     type: string
@@ -274,6 +327,26 @@ definitions:
       - LACPV1
       - LACPV2
       - STATIC
+  MEFBuyerSellerType:
+    description: An enumeration with buyer and seller values.
+    type: string
+    enum:
+      - buyer
+      - seller
+  MEFByteSize:
+    description: A size represented by value and Byte units
+    type: object
+    properties:
+      amount:
+        description: Numeric value in a given unit
+        type: number
+        format: float
+      units:
+        description: Byte Unit
+        $ref: '#/definitions/DataSizeUnit'
+    required:
+      - amount
+      - units
   Money:
     description: A base/value business entity used to represent money
     type: object
